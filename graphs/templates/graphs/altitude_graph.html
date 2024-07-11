@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+</head>
+<body>
+<div id='chart' style="width: 500px;">
+      asdfas
+  <canvas id="altitude_chart"></canvas>
+</div>
+  
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  (() => {
+    const altitude_ctx = document.getElementById('altitude_chart');
+    const altitude_labels = {{ x_axe }}
+    const altitude_data = {{ altitudes }}
+
+    const xyValues = [
+      {x:50, y:7},
+      {x:60, y:8},
+      {x:70, y:8},
+      {x:80, y:9},
+      {x:90, y:9},
+      {x:100, y:9},
+      {x:110, y:10},
+      {x:120, y:11},
+      {x:130, y:14},
+      {x:140, y:14},
+      {x:150, y:15}
+    ];
+
+    const cnf = {
+      type: 'scatter',
+      options: {
+        animation: {
+          duration: 0
+        }
+      },
+      data: {
+        datasets: [{
+          data: xyValues,
+        }]
+      }
+    }
+    new Chart(altitude_ctx, cnf);
+  })();
+</script>
+
+</html>

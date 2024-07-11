@@ -1,2 +1,6 @@
 {% load static %}
+<head>
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+</head>
 <h1>Yeap</h1>
+<button hx-get='{% url "meditions" %}'>afds</button>
