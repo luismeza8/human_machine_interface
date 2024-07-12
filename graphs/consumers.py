@@ -9,6 +9,13 @@ class GraphConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
 
-        for _ in range(1000):
-            self.send(json.dumps({'value': randint(-20, 20)}))
-            sleep(0.5)
+        for i in range(10000):
+            self.send(
+                json.dumps(
+                    {
+                        'medition': i,
+                        'value': randint(0, 500)
+                    }
+                )
+            )
+            sleep(0.2)
