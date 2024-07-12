@@ -1,6 +1,7 @@
+<!DOCTYPE html>
+
 {% load static %}
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,9 +10,14 @@
 </head>
 <body>
   
+<div style="width: 500px;">
+  <canvas id="altitude_chart"></canvas>
+</div>
 <h1 id='title'>Yeap</h1>
-<script type='text/javascript' src="{% static 'js/index.js' %}" defer></script>
 
 </body>
+<script type='module' src="{% static 'js/chart.umd.min.js' %}"></script>
+<script type='module' src="{% static 'js/index.js' %}"></script>
+
 </html>
 
