@@ -4,14 +4,21 @@ from random import randint
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 
+from graphs.models import Medition
+
 
 class AltitudeConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
+        last_medition = 0
 
-        for i in range(10000):
-            await self.send(json.dumps({'medition': i, 'altitude': randint(0, 500)}))
+        while True:
+            medition = await Medition.objects.alast()
+            if last_medition != medition.medition:
+                await self.send(json.dumps({'medition': medition.medition, 'altitude': medition.altitude}))
+                last_medition = medition.medition
             await sleep(0.2)
+
 
 
 class TemperatureConsumer(AsyncWebsocketConsumer):

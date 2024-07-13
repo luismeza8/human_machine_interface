@@ -83,7 +83,7 @@ altitude_socket.onmessage = function(e) {
 
 temperature_socket.onmessage = function(e) {
   var djangoData = JSON.parse(e.data)
-  console.log(djangoData)
+  //console.log(djangoData)
 
   var newGraph = temperature_graph_config.data.datasets[0].data;
   var newLabels = temperature_graph_config.data.labels;
@@ -101,7 +101,7 @@ temperature_socket.onmessage = function(e) {
 
 battery_socket.onmessage = function(e) {
   var djangoData = JSON.parse(e.data)
-  console.log(djangoData)
+  //console.log(djangoData)
 
   var newGraph = battery_graph_config.data.datasets[0].data;
   var newLabels = battery_graph_config.data.labels;
