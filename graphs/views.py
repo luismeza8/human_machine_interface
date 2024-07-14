@@ -25,9 +25,8 @@ def medition(request):
         medition.battery = request.GET.get('battery')
 
         medition.save()
-        return HttpResponse('yeap')
+        return HttpResponse('Medition saved.')
 
-    print('get')
     return HttpResponse('yepa')
 
 

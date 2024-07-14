@@ -24,16 +24,25 @@ class AltitudeConsumer(AsyncWebsocketConsumer):
 class TemperatureConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
+        last_medition = 0
 
-        for i in range(10000):
-            await self.send(json.dumps({'medition': i, 'temperature': randint(0, 45)}))
+        while True:
+            medition = await Medition.objects.alast()
+            if last_medition != medition.medition:
+                await self.send(json.dumps({'medition': medition.medition, 'temperature': medition.temperature}))
+                last_medition = medition.medition
             await sleep(0.2)
+
 
 
 class BatteryConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
+        last_medition = 0
 
-        for i in range(10000):
-            await self.send(json.dumps({'medition': i, 'battery': randint(0, 100)}))
+        while True:
+            medition = await Medition.objects.alast()
+            if last_medition != medition.medition:
+                await self.send(json.dumps({'medition': medition.medition, 'battery': medition.battery}))
+                last_medition = medition.medition
             await sleep(0.2)
