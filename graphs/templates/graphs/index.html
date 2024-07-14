@@ -9,19 +9,14 @@
   <link href="{% static 'src/output.css' %}" rel="stylesheet">
 </head>
 
-<body class='w-full'>
+<body class='bg-gray-200 flex flex-col justify-around h-screen w-full'>
   
-<div class='w-full flex justify-center items-center bg-red-600 h-10'>
-      <button class='ml-4'>Vehiculo Lanzador</button>
-      <button class='ml-4'>PocketQube</button>
-</div>
-
 <div class='w-full flex justify-evenly items-center'>
-  <div style="width: 600px;">
+  <div class='w-[600px]'>
     <canvas id="altitude_canvas"></canvas>
   </div>
 
-  <div style="width: 600px;">
+  <div class='w-[600px]'>
     <canvas id="temperature_canvas"></canvas>
   </div>
 
@@ -30,7 +25,7 @@
   </div>
 </div>
 
-<div>
+<div class='flex justify-evenly'>
   <div class='w-[600px]'>
     <canvas id='acelerations_canvas'></canvas>
   </div>
