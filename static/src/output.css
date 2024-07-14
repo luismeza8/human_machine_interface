@@ -558,11 +558,6 @@ video {
   position: static;
 }
 
-.mx-6 {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
-}
-
 .ml-4 {
   margin-left: 1rem;
 }
@@ -575,12 +570,12 @@ video {
   height: 2.5rem;
 }
 
-.w-full {
-  width: 100%;
+.w-\[600px\] {
+  width: 600px;
 }
 
-.content-center {
-  align-content: center;
+.w-full {
+  width: 100%;
 }
 
 .items-center {
@@ -589,6 +584,10 @@ video {
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .bg-red-600 {
