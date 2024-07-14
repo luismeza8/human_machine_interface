@@ -1,283 +1,116 @@
-const altitude_socket = new WebSocket('ws://localhost:8000/ws/altitude/');
-const temperature_socket = new WebSocket('ws://localhost:8000/ws/temperature/');
-const pressure_socket = new WebSocket('ws://localhost:8000/ws/pressure/')
-const acelerations_socket = new WebSocket('ws://localhost:8000/ws/acelerations/')
-const gyros_socket = new WebSocket('ws://localhost:8000/ws/gyros/')
-const battery_socket = new WebSocket('ws://localhost:8000/ws/battery/');
+const pocketqubeSocket = new WebSocket('ws://localhost:8000/ws/pocketqube/')
 
 const altitude_canvas = document.getElementById('altitude_canvas');
 const temperature_canvas = document.getElementById('temperature_canvas');
 const pressure_canvas = document.getElementById('pressure_canvas')
 const acelerations_canvas = document.getElementById('acelerations_canvas')
 const gyros_canvas = document.getElementById('gyros_canvas')
-const battery_canvas = document.getElementById('battery_canvas');
 
-const altitude_graph_config = {
-  type: 'line',
-  data: {
-    labels: new Array(15),
-    datasets: [{
-      label: 'Altura',
-      data: new Array(15),
-      borderWidth: 4,
-    }],
-  },
-  options: {
-    animation: {
-      duration: 1
-    }
-  },
+function getDataFromConfigChart(configChart, datasetIndex) {
+  return configChart.data.datasets[datasetIndex].data;
 }
 
-const temperature_graph_config = {
-  type: 'line',
-  data: {
-    labels: new Array(15),
-    datasets: [{
-      label: 'Temperatura',
-      data: new Array(15),
-      borderWidth: 4,
-      borderColor: 'rgb(255, 0, 0)',
-    }],
-  },
-  options: {
-    animation: {
-      duration: 1
-    }
-  },
+function getLabelsFromConfigChart(configChart) {
+  return configChart.data.labels;
 }
 
-const pressure_graph_config = {
-  type: 'line',
-  data: {
-    labels: new Array(15),
-    datasets: [{
-      label: 'Presion',
-      data: new Array(15),
-      borderWidth: 4,
-      borderColor: 'rgb(0, 255, 0)',
-    }],
-  },
-  options: {
-    animation: {
-      duration: 1
-    }
-  },
+function insertNewDataInArray(array, data) {
+  array.shift();
+  array.push(data);
+  return array;
 }
 
-const acelerations_graph_config = {
-  type: 'line',
-  data: {
-    labels: new Array(15),
-    datasets: [
-      {
-        label: 'X',
-        data: new Array(15),
-        borderWidth: 4,
-        borderColor: 'rgb(255, 255, 0)',
-      },
-      {
-        label: 'Y',
-        data: new Array(15),
-        borderWidth: 4,
-        borderColor: 'rgb(0, 255, 255)',
-      },
-      {
-        label: 'Z',
-        data: new Array(15),
-        borderWidth: 4,
-        borderColor: 'rgb(0, 255, 0)',
-      },
-    ],
-  },
-  options: {
-    animation: {
-      duration: 1
-    }
-  },
+function updateChartDataset(chartConfig, datasetIndex, newDataset) {
+  return chartConfig.data.datasets[datasetIndex].data = newDataset;
 }
 
-const gyros_graph_config = {
-  type: 'line',
-  data: {
-    labels: new Array(15),
-    datasets: [
-      {
-        label: 'X',
-        data: new Array(15),
-        borderWidth: 4,
-        borderColor: 'rgb(127, 255, 0)',
-      },
-      {
-        label: 'Y',
-        data: new Array(15),
-        borderWidth: 4,
-        borderColor: 'rgb(0, 255, 127)',
-      },
-      {
-        label: 'Z',
-        data: new Array(15),
-        borderWidth: 4,
-        borderColor: 'rgb(0, 127, 0)',
-      },
-    ],
-  },
-  options: {
-    animation: {
-      duration: 1
-    }
-  },
+function updateChartLabels(chartConfig, newLabels) {
+  return chartConfig.data.labels = newLabels;
 }
 
-const battery_graph_config = {
-  type: 'line',
-  data: {
-    labels: new Array(15),
-    datasets: [{
-      label: 'Bateria',
-      data: new Array(15),
-      borderWidth: 4,
-      borderColor: 'rgb(0, 255, 0)',
-      fill: true,
-    }],
-  },
-  options: {
-    animation: {
-      duration: 1
-    }
-  },
+function createChartConfig(datasets) {
+  return {
+    type: 'line',
+    data: {
+      labels: new Array(15),
+      datasets: datasets,
+    },
+    options: {
+      animation: {
+        duration: 1
+      }
+    },
+  }
 }
 
-var altitude_chart = new Chart(altitude_canvas, altitude_graph_config);
-var temperature_chart = new Chart(temperature_canvas, temperature_graph_config);
-var pressure_chart = new Chart(pressure_canvas, pressure_graph_config);
-var acelerations_chart = new Chart(acelerations_canvas, acelerations_graph_config);
-var gyros_chart = new Chart(gyros_canvas, gyros_graph_config);
-var battery_chart = new Chart(battery_canvas, battery_graph_config);
+const altitude_chart_config = createChartConfig([{label: 'Altura', data: new Array(15), borderWidth: 4}]);
+const temperature_chart_config = createChartConfig([{label: 'Temperatura', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 0, 0)'}]);
+const pressure_chart_config = createChartConfig([{label: 'Presion', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}]);
+const aceleration_chart_config = createChartConfig([
+  {label: 'X', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 255, 0)'},
+  {label: 'Y', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 255)'},
+  {label: 'Z', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}
+])
+const gyros_chart_config = createChartConfig([
+  {label: 'X', data: new Array(15), borderWidth: 4, borderColor: 'rgb(127, 255, 0)'},
+  {label: 'Y', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 127)'},
+  {label: 'Z', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 127, 0)'},
+])
 
-altitude_socket.onmessage = function(e) {
-  var djangoData = JSON.parse(e.data)
-  console.log(djangoData)
+const altitude_chart = new Chart(altitude_canvas, altitude_chart_config);
+const temperature_chart = new Chart(temperature_canvas, temperature_chart_config);
+const pressure_chart = new Chart(pressure_canvas, pressure_chart_config);
+const acelerations_chart = new Chart(acelerations_canvas, aceleration_chart_config);
+const gyros_chart = new Chart(gyros_canvas, gyros_chart_config);
 
-  var newGraph = altitude_graph_config.data.datasets[0].data;
-  var newLabels = altitude_graph_config.data.labels;
+pocketqubeSocket.onmessage = function(e) {
+  const data = JSON.parse(e.data);
 
-  newGraph.shift();
-  newGraph.push(djangoData.altitude);
+  let newLabel = getLabelsFromConfigChart(altitude_chart_config);
 
-  newLabels.shift();
-  newLabels.push(djangoData.medition);
+  let newAltitudeDataset = getDataFromConfigChart(altitude_chart_config, 0);
+  let newTemperatureDataset = getDataFromConfigChart(temperature_chart_config, 0);
+  let newPressureDataset = getDataFromConfigChart(pressure_chart_config, 0);
+  let newAcelerationsDatasetX = getDataFromConfigChart(aceleration_chart_config, 0);
+  let newAcelerationsDatasetY = getDataFromConfigChart(aceleration_chart_config, 1);
+  let newAcelerationsDatasetZ = getDataFromConfigChart(aceleration_chart_config, 2);
+  let newGyrosDatasetX = getDataFromConfigChart(gyros_chart_config, 0);
+  let newGyrosDatasetY = getDataFromConfigChart(gyros_chart_config, 1);
+  let newGyrosDatasetZ = getDataFromConfigChart(gyros_chart_config, 2);
 
-  altitude_graph_config.data.datasets[0].data = newGraph;
-  altitude_graph_config.data.labels = newLabels;
+  newLabel = insertNewDataInArray(newLabel, data.medition);
+  newAltitudeDataset = insertNewDataInArray(newAltitudeDataset, data.altitude);
+  newTemperatureDataset = insertNewDataInArray(newTemperatureDataset, data.temperature);
+  newPressureDataset = insertNewDataInArray(newPressureDataset, data.pressure);
+  newAcelerationsDatasetX = insertNewDataInArray(newAcelerationsDatasetX, data.aceleration_x);
+  newAcelerationsDatasetY = insertNewDataInArray(newAcelerationsDatasetY, data.aceleration_y);
+  newAcelerationsDatasetZ = insertNewDataInArray(newAcelerationsDatasetZ, data.aceleration_z);
+  newGyrosDatasetX = insertNewDataInArray(newGyrosDatasetX, data.gyro_x);
+  newGyrosDatasetY = insertNewDataInArray(newGyrosDatasetX, data.gyro_y);
+  newGyrosDatasetZ = insertNewDataInArray(newGyrosDatasetX, data.gyro_z);
+
+  altitude_chart_config.data.datasets[0].data = newAltitudeDataset;
+  altitude_chart_config.data.labels = newLabel;
+
+  temperature_chart_config.data.datasets[0].data = newTemperatureDataset;
+  temperature_chart_config.data.labels = newLabel;
+
+  pressure_chart_config.data.datasets[0].data = newPressureDataset;
+  pressure_chart_config.data.labels = newLabel;
+
+  aceleration_chart_config.data.datasets[0].data = newAcelerationsDatasetX;
+  aceleration_chart_config.data.datasets[1].data = newAcelerationsDatasetY;
+  aceleration_chart_config.data.datasets[2].data = newAcelerationsDatasetZ;
+  aceleration_chart_config.data.labels = newLabel;
+
+  gyros_chart_config.data.datasets[0].data = newGyrosDatasetX;
+  gyros_chart_config.data.datasets[1].data = newGyrosDatasetY;
+  gyros_chart_config.data.datasets[2].data = newGyrosDatasetZ;
+  gyros_chart_config.data.labels = newLabel;
+
   altitude_chart.update();
-}
-
-temperature_socket.onmessage = function(e) {
-  var djangoData = JSON.parse(e.data)
-  //console.log(djangoData)
-
-  var newGraph = temperature_graph_config.data.datasets[0].data;
-  var newLabels = temperature_graph_config.data.labels;
-
-  newGraph.shift();
-  newGraph.push(djangoData.temperature);
-
-  newLabels.shift();
-  newLabels.push(djangoData.medition);
-
-  temperature_graph_config.data.datasets[0].data = newGraph;
-  temperature_graph_config.data.labels = newLabels;
   temperature_chart.update();
-}
-
-pressure_socket.onmessage = function(e) {
-  var djangoData = JSON.parse(e.data)
-
-  var newGraph = pressure_graph_config.data.datasets[0].data;
-  var newLabels = pressure_graph_config.data.labels;
-
-  newGraph.shift();
-  newGraph.push(djangoData.pressure);
-
-  newLabels.shift();
-  newLabels.push(djangoData.medition);
-
-  pressure_graph_config.data.datasets[0].data = newGraph;
-  pressure_graph_config.data.labels = newLabels;
   pressure_chart.update();
-}
-
-acelerations_socket.onmessage = function(e) {
-  var djangoData = JSON.parse(e.data);
-
-  var new_x_axis = acelerations_graph_config.data.labels;
-  var new_y_axis_x = acelerations_graph_config.data.datasets[0].data;
-  var new_y_axis_y = acelerations_graph_config.data.datasets[1].data;
-  var new_y_axis_z = acelerations_graph_config.data.datasets[2].data;
-
-  new_x_axis.shift();
-  new_x_axis.push(djangoData.medition);
-
-  new_y_axis_x.shift();
-  new_y_axis_x.push(djangoData.x);
-
-  new_y_axis_y.shift();
-  new_y_axis_y.push(djangoData.y);
-  
-  new_y_axis_z.shift();
-  new_y_axis_z.push(djangoData.z);
-
-  acelerations_graph_config.data.labels = new_x_axis;
-  acelerations_graph_config.data.datasets[0].data = new_y_axis_x;
-  acelerations_graph_config.data.datasets[1].data = new_y_axis_y;
-  acelerations_graph_config.data.datasets[2].data = new_y_axis_z;
-
   acelerations_chart.update();
-}
-
-gyros_socket.onmessage = function(e) {
-  var djangoData = JSON.parse(e.data);
-
-  var new_x_axis = gyros_graph_config.data.labels;
-  var new_y_axis_x = gyros_graph_config.data.datasets[0].data;
-  var new_y_axis_y = gyros_graph_config.data.datasets[1].data;
-  var new_y_axis_z = gyros_graph_config.data.datasets[2].data;
-
-  new_x_axis.shift();
-  new_x_axis.push(djangoData.medition);
-
-  new_y_axis_x.shift();
-  new_y_axis_x.push(djangoData.x);
-
-  new_y_axis_y.shift();
-  new_y_axis_y.push(djangoData.y);
-  
-  new_y_axis_z.shift();
-  new_y_axis_z.push(djangoData.z);
-
-  gyros_graph_config.data.labels = new_x_axis;
-  gyros_graph_config.data.datasets[0].data = new_y_axis_x;
-  gyros_graph_config.data.datasets[1].data = new_y_axis_y;
-  gyros_graph_config.data.datasets[2].data = new_y_axis_z;
-
   gyros_chart.update();
-}
-
-battery_socket.onmessage = function(e) {
-  var djangoData = JSON.parse(e.data)
-  //console.log(djangoData)
-
-  var newGraph = battery_graph_config.data.datasets[0].data;
-  var newLabels = battery_graph_config.data.labels;
-
-  newGraph.shift();
-  newGraph.push(djangoData.battery);
-
-  newLabels.shift();
-  newLabels.push(djangoData.medition);
-
-  battery_graph_config.data.datasets[0].data = newGraph;
-  battery_graph_config.data.labels = newLabels;
-  battery_chart.update();
 }
