@@ -65,7 +65,6 @@ const gyros_chart = new Chart(gyros_canvas, gyros_chart_config);
 
 pocketqubeSocket.onmessage = function(e) {
   const data = JSON.parse(e.data);
-
   let newLabel = getLabelsFromConfigChart(altitude_chart_config);
 
   let newAltitudeDataset = getDataFromConfigChart(altitude_chart_config, 0);
@@ -86,8 +85,8 @@ pocketqubeSocket.onmessage = function(e) {
   newAcelerationsDatasetY = insertNewDataInArray(newAcelerationsDatasetY, data.aceleration_y);
   newAcelerationsDatasetZ = insertNewDataInArray(newAcelerationsDatasetZ, data.aceleration_z);
   newGyrosDatasetX = insertNewDataInArray(newGyrosDatasetX, data.gyro_x);
-  newGyrosDatasetY = insertNewDataInArray(newGyrosDatasetX, data.gyro_y);
-  newGyrosDatasetZ = insertNewDataInArray(newGyrosDatasetX, data.gyro_z);
+  newGyrosDatasetY = insertNewDataInArray(newGyrosDatasetY, data.gyro_y);
+  newGyrosDatasetZ = insertNewDataInArray(newGyrosDatasetZ, data.gyro_z);
 
   altitude_chart_config.data.datasets[0].data = newAltitudeDataset;
   altitude_chart_config.data.labels = newLabel;
