@@ -1,5 +1,5 @@
-import json
 from asyncio import sleep
+import json
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 

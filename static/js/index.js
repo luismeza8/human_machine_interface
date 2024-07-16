@@ -1,10 +1,10 @@
 const pocketqubeSocket = new WebSocket('ws://localhost:8000/ws/pocketqube/')
 
-const altitude_canvas = document.getElementById('altitude_canvas');
-const temperature_canvas = document.getElementById('temperature_canvas');
-const pressure_canvas = document.getElementById('pressure_canvas')
-const acelerations_canvas = document.getElementById('acelerations_canvas')
-const gyros_canvas = document.getElementById('gyros_canvas')
+const altitudeCanvas = document.getElementById('altitude_canvas');
+const temperatureCanvas = document.getElementById('temperature_canvas');
+const pressureCanvas = document.getElementById('pressure_canvas')
+const acelerationsCanvas = document.getElementById('acelerations_canvas')
+const gyrosCanvas = document.getElementById('gyros_canvas')
 
 function getDataFromConfigChart(configChart, datasetIndex) {
   return configChart.data.datasets[datasetIndex].data;
@@ -43,39 +43,39 @@ function createChartConfig(datasets) {
   }
 }
 
-const altitude_chart_config = createChartConfig([{label: 'Altura', data: new Array(15), borderWidth: 4}]);
-const temperature_chart_config = createChartConfig([{label: 'Temperatura', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 0, 0)'}]);
-const pressure_chart_config = createChartConfig([{label: 'Presion', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}]);
-const aceleration_chart_config = createChartConfig([
+const altitudeChartConfig = createChartConfig([{label: 'Altura', data: new Array(15), borderWidth: 4}]);
+const temperatureChartConfig = createChartConfig([{label: 'Temperatura', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 0, 0)'}]);
+const pressureChartConfig = createChartConfig([{label: 'Presion', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}]);
+const acelerationsChartConfig = createChartConfig([
   {label: 'X', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 255, 0)'},
   {label: 'Y', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 255)'},
   {label: 'Z', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}
 ])
-const gyros_chart_config = createChartConfig([
+const gyrosChartConfig = createChartConfig([
   {label: 'X', data: new Array(15), borderWidth: 4, borderColor: 'rgb(127, 255, 0)'},
   {label: 'Y', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 127)'},
   {label: 'Z', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 127, 0)'},
 ])
 
-const altitude_chart = new Chart(altitude_canvas, altitude_chart_config);
-const temperature_chart = new Chart(temperature_canvas, temperature_chart_config);
-const pressure_chart = new Chart(pressure_canvas, pressure_chart_config);
-const acelerations_chart = new Chart(acelerations_canvas, aceleration_chart_config);
-const gyros_chart = new Chart(gyros_canvas, gyros_chart_config);
+const altitudeChart = new Chart(altitudeCanvas, altitudeChartConfig);
+const temperatureChart = new Chart(temperatureCanvas, temperatureChartConfig);
+const pressureChart = new Chart(pressureCanvas, pressureChartConfig);
+const acelerationsChart = new Chart(acelerationsCanvas, acelerationsChartConfig);
+const gyrosChart = new Chart(gyrosCanvas, gyrosChartConfig);
 
 pocketqubeSocket.onmessage = function(e) {
   const data = JSON.parse(e.data);
-  let newLabel = getLabelsFromConfigChart(altitude_chart_config);
+  let newLabel = getLabelsFromConfigChart(altitudeChartConfig);
 
-  let newAltitudeDataset = getDataFromConfigChart(altitude_chart_config, 0);
-  let newTemperatureDataset = getDataFromConfigChart(temperature_chart_config, 0);
-  let newPressureDataset = getDataFromConfigChart(pressure_chart_config, 0);
-  let newAcelerationsDatasetX = getDataFromConfigChart(aceleration_chart_config, 0);
-  let newAcelerationsDatasetY = getDataFromConfigChart(aceleration_chart_config, 1);
-  let newAcelerationsDatasetZ = getDataFromConfigChart(aceleration_chart_config, 2);
-  let newGyrosDatasetX = getDataFromConfigChart(gyros_chart_config, 0);
-  let newGyrosDatasetY = getDataFromConfigChart(gyros_chart_config, 1);
-  let newGyrosDatasetZ = getDataFromConfigChart(gyros_chart_config, 2);
+  let newAltitudeDataset = getDataFromConfigChart(altitudeChartConfig, 0);
+  let newTemperatureDataset = getDataFromConfigChart(temperatureChartConfig, 0);
+  let newPressureDataset = getDataFromConfigChart(pressureChartConfig, 0);
+  let newAcelerationsDatasetX = getDataFromConfigChart(acelerationsChartConfig, 0);
+  let newAcelerationsDatasetY = getDataFromConfigChart(acelerationsChartConfig, 1);
+  let newAcelerationsDatasetZ = getDataFromConfigChart(acelerationsChartConfig, 2);
+  let newGyrosDatasetX = getDataFromConfigChart(gyrosChartConfig, 0);
+  let newGyrosDatasetY = getDataFromConfigChart(gyrosChartConfig, 1);
+  let newGyrosDatasetZ = getDataFromConfigChart(gyrosChartConfig, 2);
 
   newLabel = insertNewDataInArray(newLabel, data.medition);
   newAltitudeDataset = insertNewDataInArray(newAltitudeDataset, data.altitude);
@@ -88,28 +88,28 @@ pocketqubeSocket.onmessage = function(e) {
   newGyrosDatasetY = insertNewDataInArray(newGyrosDatasetY, data.gyro_y);
   newGyrosDatasetZ = insertNewDataInArray(newGyrosDatasetZ, data.gyro_z);
 
-  altitude_chart_config.data.datasets[0].data = newAltitudeDataset;
-  altitude_chart_config.data.labels = newLabel;
+  altitudeChartConfig.data.datasets[0].data = newAltitudeDataset;
+  altitudeChartConfig.data.labels = newLabel;
 
-  temperature_chart_config.data.datasets[0].data = newTemperatureDataset;
-  temperature_chart_config.data.labels = newLabel;
+  temperatureChartConfig.data.datasets[0].data = newTemperatureDataset;
+  temperatureChartConfig.data.labels = newLabel;
 
-  pressure_chart_config.data.datasets[0].data = newPressureDataset;
-  pressure_chart_config.data.labels = newLabel;
+  pressureChartConfig.data.datasets[0].data = newPressureDataset;
+  pressureChartConfig.data.labels = newLabel;
 
-  aceleration_chart_config.data.datasets[0].data = newAcelerationsDatasetX;
-  aceleration_chart_config.data.datasets[1].data = newAcelerationsDatasetY;
-  aceleration_chart_config.data.datasets[2].data = newAcelerationsDatasetZ;
-  aceleration_chart_config.data.labels = newLabel;
+  acelerationsChartConfig.data.datasets[0].data = newAcelerationsDatasetX;
+  acelerationsChartConfig.data.datasets[1].data = newAcelerationsDatasetY;
+  acelerationsChartConfig.data.datasets[2].data = newAcelerationsDatasetZ;
+  acelerationsChartConfig.data.labels = newLabel;
 
-  gyros_chart_config.data.datasets[0].data = newGyrosDatasetX;
-  gyros_chart_config.data.datasets[1].data = newGyrosDatasetY;
-  gyros_chart_config.data.datasets[2].data = newGyrosDatasetZ;
-  gyros_chart_config.data.labels = newLabel;
+  gyrosChartConfig.data.datasets[0].data = newGyrosDatasetX;
+  gyrosChartConfig.data.datasets[1].data = newGyrosDatasetY;
+  gyrosChartConfig.data.datasets[2].data = newGyrosDatasetZ;
+  gyrosChartConfig.data.labels = newLabel;
 
-  altitude_chart.update();
-  temperature_chart.update();
-  pressure_chart.update();
-  acelerations_chart.update();
-  gyros_chart.update();
+  altitudeChart.update();
+  temperatureChart.update();
+  pressureChart.update();
+  acelerationsChart.update();
+  gyrosChart.update();
 }
