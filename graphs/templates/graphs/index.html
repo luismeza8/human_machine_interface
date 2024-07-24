@@ -1,43 +1,39 @@
+{% extends "graphs/base.html" %}
 {% load static %}
-<!DOCTYPE html>
 
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index</title>
-  <link href="{% static 'src/output.css' %}" rel="stylesheet">
-</head>
+{% block content %}
+<div class='bg-white flex flex-col h-screen w-full px-8 py-4'>
+  <div class='mb-4 w-full h-[8%] text-primary text-6xl'>Mision Jeeka</div>
 
-<body class='flex flex-col justify-around h-screen w-full'>
-  
-<div class='w-full flex justify-evenly items-center'>
-  <div class='w-[600px]'>
-    <canvas id="altitude_canvas"></canvas>
-  </div>
+  <div class='mb-4 bg-secondary w-full h-[40%] rounded-3xl'></div>
 
-  <div class='w-[600px]'>
-    <canvas id="temperature_canvas"></canvas>
-  </div>
+  <div class='bg-secondary w-full h-fit overflow-y-auto rounded-3xl'>
 
-  <div class='w-[600px]'>
-    <canvas id='pressure_canvas'></canvas>
-  </div>
-</div>
+    <div class='w-full flex justify-evenly items-center'>
+      <div class='m-4 bg-white rounded-xl w-1/2'>
+        <canvas id="altitude_canvas"></canvas>
+      </div>
+      <div class='m-4 bg-white rounded-xl w-1/2'>
+        <canvas id="temperature_canvas"></canvas>
+      </div>
+    </div>
 
-<div class='flex justify-evenly'>
-  <div class='w-[600px]'>
-    <canvas id='acelerations_canvas'></canvas>
-  </div>
 
-  <div class='w-[600px]'>
-    <canvas id='gyros_canvas'></canvas>
+    <div class='flex justify-evenly'>
+      <div class='m-4 bg-white rounded-xl w-1/2'>
+        <canvas id='acelerations_canvas'></canvas>
+      </div>
+
+      <div class='m-4 bg-white rounded-xl w-1/2'>
+        <canvas id='gyros_canvas'></canvas>
+      </div>
+    </div>
+      <div class='m-4 bg-white rounded-xl w-1/2'>
+        <canvas id='pressure_canvas'></canvas>
+      </div>
   </div>
 </div>
 
 <script type='module' src="{% static 'js/chart.umd.min.js' %}"></script>
 <script type='module' src="{% static 'js/index.js' %}"></script>
-</body>
-
-</html>
-
+{% endblock %}

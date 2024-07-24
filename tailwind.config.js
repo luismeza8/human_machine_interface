@@ -4,7 +4,12 @@ module.exports = {
     './graphs/templates/graphs/**.html'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#31739E',
+        secondary: '#BFDAED'
+      }
+    },
   },
   plugins: [],
 }
