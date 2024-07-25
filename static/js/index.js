@@ -56,7 +56,7 @@ function createChartConfig(datasets, suggestedMin, suggestedMax) {
   }
 }
 
-const altitudeChartConfig = createChartConfig([{data: new Array(15), borderWidth: 4}], 0, 100);
+const altitudeChartConfig = createChartConfig([{data: new Array(25), borderWidth: 4}], 0, 100);
 const temperatureChartConfig = createChartConfig([{label: 'Temperatura', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 0, 0)'}], 20, 30);
 const pressureChartConfig = createChartConfig([{label: 'Presion', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}], 1000, 1100);
 const acelerationsChartConfig = createChartConfig([
