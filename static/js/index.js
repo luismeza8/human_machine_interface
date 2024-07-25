@@ -36,6 +36,11 @@ function createChartConfig(datasets) {
       datasets: datasets,
     },
     options: {
+      plugins: {
+      legend: {
+        display: false,
+      },
+    },
       animation: {
         duration: 1
       }
@@ -43,7 +48,7 @@ function createChartConfig(datasets) {
   }
 }
 
-const altitudeChartConfig = createChartConfig([{label: 'Altura', data: new Array(15), borderWidth: 4}]);
+const altitudeChartConfig = createChartConfig([{data: new Array(15), borderWidth: 4}]);
 const temperatureChartConfig = createChartConfig([{label: 'Temperatura', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 0, 0)'}]);
 const pressureChartConfig = createChartConfig([{label: 'Presion', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}]);
 const acelerationsChartConfig = createChartConfig([

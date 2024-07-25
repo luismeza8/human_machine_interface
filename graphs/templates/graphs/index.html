@@ -3,34 +3,41 @@
 
 {% block content %}
 <div class='bg-white flex flex-col h-screen w-full px-8 py-4'>
-  <div class='mb-4 w-full h-[8%] text-primary text-6xl'>Mision Jeeka</div>
+  <div class='mb-4 w-full h-[8%] text-primary text-6xl'>Misión Jeeka</div>
 
   <div class='mb-4 bg-secondary w-full h-[40%] rounded-3xl'></div>
 
   <div class='bg-secondary w-full h-fit overflow-y-auto rounded-3xl'>
 
     <div class='w-full flex justify-evenly items-center'>
-      <div class='m-4 bg-white rounded-xl w-1/2'>
-        <canvas id="altitude_canvas"></canvas>
+      <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
+        <h3 class='text-primary font-bold text-lg mb-1'>Altitud</h3>
+        <canvas class='p-2 bg-white rounded-xl' id="altitude_canvas"></canvas>
       </div>
-      <div class='m-4 bg-white rounded-xl w-1/2'>
-        <canvas id="temperature_canvas"></canvas>
+      <div class='flex flex-col items-center my-4 mr-4 ml-2 w-1/2'>
+        <h3 class='text-primary font-bold text-lg mb-1'>Temperatura</h3>
+        <canvas class='p-2 bg-white rounded-xl' id="temperature_canvas"></canvas>
       </div>
     </div>
-
 
     <div class='flex justify-evenly'>
-      <div class='m-4 bg-white rounded-xl w-1/2'>
-        <canvas id='acelerations_canvas'></canvas>
+      <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
+        <h3 class='text-primary font-bold text-lg mb-1'>Aceleraciones</h3>
+        <canvas class='p-2 bg-white rounded-xl' id='acelerations_canvas'></canvas>
       </div>
 
-      <div class='m-4 bg-white rounded-xl w-1/2'>
-        <canvas id='gyros_canvas'></canvas>
+      <div class='flex flex-col items-center my-4 mr-4 ml-2 w-1/2'>
+        <h3 class='text-primary font-bold text-lg mb-1'>Gyro</h3>
+        <canvas class='p-2 bg-white rounded-xl' id='gyros_canvas'></canvas>
       </div>
     </div>
-      <div class='m-4 bg-white rounded-xl w-1/2'>
-        <canvas id='pressure_canvas'></canvas>
+
+    <div class='flex justify-evenly'>
+      <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
+        <h3 class='text-primary font-bold text-lg mb-1'>Presión atmosferica</h3>
+        <canvas class='p-2 bg-white rounded-xl' id='pressure_canvas'></canvas>
       </div>
+    </div>
   </div>
 </div>
 
