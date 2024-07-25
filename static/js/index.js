@@ -2,9 +2,11 @@ const pocketqubeSocket = new WebSocket('ws://localhost:8000/ws/pocketqube/')
 
 const altitudeCanvas = document.getElementById('altitude_canvas');
 const temperatureCanvas = document.getElementById('temperature_canvas');
-const pressureCanvas = document.getElementById('pressure_canvas')
-const acelerationsCanvas = document.getElementById('acelerations_canvas')
-const gyrosCanvas = document.getElementById('gyros_canvas')
+const pressureCanvas = document.getElementById('pressure_canvas');
+const acelerationsCanvas = document.getElementById('acelerations_canvas');
+const gyrosCanvas = document.getElementById('gyros_canvas');
+
+const altitudeLabel = document.getElementById('altitude-label');
 
 function getDataFromConfigChart(configChart, datasetIndex) {
   return configChart.data.datasets[datasetIndex].data;
@@ -28,7 +30,7 @@ function updateChartLabels(chartConfig, newLabels) {
   return chartConfig.data.labels = newLabels;
 }
 
-function createChartConfig(datasets) {
+function createChartConfig(datasets, suggestedMin, suggestedMax) {
   return {
     type: 'line',
     data: {
@@ -36,10 +38,16 @@ function createChartConfig(datasets) {
       datasets: datasets,
     },
     options: {
-      plugins: {
-      legend: {
-        display: false,
+      scales: {
+        y: {
+          suggestedMin: suggestedMin,
+          suggestedMax: suggestedMax
+        },
       },
+      plugins: {
+        legend: {
+          display: false,
+        },
     },
       animation: {
         duration: 1
@@ -48,19 +56,19 @@ function createChartConfig(datasets) {
   }
 }
 
-const altitudeChartConfig = createChartConfig([{data: new Array(15), borderWidth: 4}]);
-const temperatureChartConfig = createChartConfig([{label: 'Temperatura', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 0, 0)'}]);
-const pressureChartConfig = createChartConfig([{label: 'Presion', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}]);
+const altitudeChartConfig = createChartConfig([{data: new Array(15), borderWidth: 4}], 0, 100);
+const temperatureChartConfig = createChartConfig([{label: 'Temperatura', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 0, 0)'}], 20, 30);
+const pressureChartConfig = createChartConfig([{label: 'Presion', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}], 1000, 1100);
 const acelerationsChartConfig = createChartConfig([
   {label: 'X', data: new Array(15), borderWidth: 4, borderColor: 'rgb(255, 255, 0)'},
   {label: 'Y', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 255)'},
   {label: 'Z', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}
-])
+], 0, 2)
 const gyrosChartConfig = createChartConfig([
   {label: 'X', data: new Array(15), borderWidth: 4, borderColor: 'rgb(127, 255, 0)'},
   {label: 'Y', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 255, 127)'},
   {label: 'Z', data: new Array(15), borderWidth: 4, borderColor: 'rgb(0, 127, 0)'},
-])
+], 0, 2)
 
 const altitudeChart = new Chart(altitudeCanvas, altitudeChartConfig);
 const temperatureChart = new Chart(temperatureCanvas, temperatureChartConfig);
@@ -84,6 +92,7 @@ pocketqubeSocket.onmessage = function(e) {
 
   newLabel = insertNewDataInArray(newLabel, data.medition);
   newAltitudeDataset = insertNewDataInArray(newAltitudeDataset, data.altitude);
+  altitudeLabel.innerHTML = data.altitude;
   newTemperatureDataset = insertNewDataInArray(newTemperatureDataset, data.temperature);
   newPressureDataset = insertNewDataInArray(newPressureDataset, data.pressure);
   newAcelerationsDatasetX = insertNewDataInArray(newAcelerationsDatasetX, data.aceleration_x);
