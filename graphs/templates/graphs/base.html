@@ -6,15 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link href="{% static 'src/output.css' %}" rel="stylesheet">
+  <script type='text/javascript' src='{% static "js/htmx.min.js" %}'></script>
 </head>
 <body class='flex w-full h-screen'>
   <aside class='p-4 flex flex-col items-center bg-primary w-[200px] h-screen'>
     <div class='h-[120px] w-[120px] rounded-full bg-secondary'></div>
     <div class='mt-16'>
-        <div class='mb-12 text-secondary text-xl'>
+        <div class='mb-12 text-secondary text-xl'
+          hx-get='{% url "index" %}'
+          hx-target='#content'>
           General
         </div>
-        <div class='mb-12 text-secondary text-xl'>
+        <div class='mb-12 text-secondary text-xl'
+          hx-get='{% url "atmosfera" %}'
+          hx-target='#content'>
           Atmosfera
         </div>
         <div class='mb-12 text-secondary text-xl'>
@@ -25,7 +30,7 @@
         </div>
     </div>
   </aside>
-  <main class='h-screen w-screen box-border overflow-y-auto'>
+  <main id='content' class='h-screen w-screen box-border overflow-y-auto'>
     {% block content %}
     {% endblock %}
   </main>

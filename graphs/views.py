@@ -5,7 +5,13 @@ from graphs.models import Medition
 
 # Create your views here.
 def index(request):
-    return render(request, 'graphs/index.html')
+    template = 'graphs/index.html' if request.htmx else 'graphs/index_full.html'
+    return render(request, template)
+
+
+def atmosfera(request):
+    template = 'graphs/atmosfera.html' if request.htmx else 'graphs/atmosfera_full.html'
+    return render(request, template)
 
 
 def medition(request):
