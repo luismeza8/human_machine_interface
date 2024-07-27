@@ -1,5 +1,4 @@
 (() => {
-const pocketqubeSocket = new WebSocket('ws://localhost:8000/ws/pocketqube/')
 
 const altitudeCanvas = document.getElementById('altitude_canvas');
 const temperatureCanvas = document.getElementById('temperature_canvas');
@@ -103,8 +102,8 @@ pocketqubeSocket.onmessage = function(e) {
   newGyrosDatasetY = insertNewDataInArray(newGyrosDatasetY, data.gyro_y);
   newGyrosDatasetZ = insertNewDataInArray(newGyrosDatasetZ, data.gyro_z);
 
-  altitudeChartConfig.data.datasets[0].data = newAltitudeDataset;
-  altitudeChartConfig.data.labels = newLabel;
+  altitudeChartConfig.data.datasets[0].data = newAltitudeDatasetBase;
+  altitudeChartConfig.data.labels = newLabelBase;
 
   temperatureChartConfig.data.datasets[0].data = newTemperatureDataset;
   temperatureChartConfig.data.labels = newLabel;
