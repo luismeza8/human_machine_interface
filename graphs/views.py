@@ -19,7 +19,7 @@ def estructura(request):
 
 
 def mensajeria(request):
-    template = 'graphs/mensajeria.html' if request.htmx else 'graphs/mensajeria.html'
+    template = 'graphs/mensajeria.html' if request.htmx else 'graphs/mensajeria_full.html'
     return render(request, template)
 
 

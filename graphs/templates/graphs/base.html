@@ -15,22 +15,26 @@
     <div class='mt-16'>
         <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
           hx-get='{% url "index" %}'
-          hx-target='#content'>
+          hx-target='#content'
+          hx-push-url='true'>
           General
         </div>
         <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
           hx-get='{% url "atmosfera" %}'
-          hx-target='#content'>
+          hx-target='#content'
+          hx-push-url='true'>
           Atmosfera
         </div>
         <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
           hx-get='{% url "estructura" %}'
-          hx-target='#content'>
+          hx-target='#content'
+          hx-push-url='true'>
           Estructura
         </div>
         <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
           hx-get='{% url "mensajeria" %}'
-          hx-target='#content'>
+          hx-target='#content'
+          hx-push-url='true'>
           Mensajeria
         </div>
     </div>
