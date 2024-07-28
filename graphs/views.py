@@ -3,7 +3,6 @@ from django.shortcuts import render
 
 from graphs.models import Medition
 
-# Create your views here.
 def index(request):
     template = 'graphs/index.html' if request.htmx else 'graphs/index_full.html'
     return render(request, template)
@@ -11,6 +10,16 @@ def index(request):
 
 def atmosfera(request):
     template = 'graphs/atmosfera.html' if request.htmx else 'graphs/atmosfera_full.html'
+    return render(request, template)
+
+
+def estructura(request):
+    template = 'graphs/estructura.html' if request.htmx else 'graphs/estructura_full.html'
+    return render(request, template)
+
+
+def mensajeria(request):
+    template = 'graphs/mensajeria.html' if request.htmx else 'graphs/mensajeria.html'
     return render(request, template)
 
 

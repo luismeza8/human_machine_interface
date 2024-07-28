@@ -23,10 +23,14 @@
           hx-target='#content'>
           Atmosfera
         </div>
-        <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+        <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
+          hx-get='{% url "estructura" %}'
+          hx-target='#content'>
           Estructura
         </div>
-        <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+        <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
+          hx-get='{% url "mensajeria" %}'
+          hx-target='#content'>
           Mensajeria
         </div>
     </div>
