@@ -1,48 +1,32 @@
 const pocketqubeSocket = new WebSocket('ws://localhost:8000/ws/pocketqube/')
-var v = 'yeap boludo';
 
 function insertNewDataInArray(array, data) {
   array.shift();
   array.push(data);
   return array;
 }
-function createChartConfig(datasets, suggestedMin, suggestedMax) {
-  return {
-    type: 'line',
-    data: {
-      labels: new Array(15),
-      datasets: datasets,
-    },
-    options: {
-      scales: {
-        y: {
-          suggestedMin: suggestedMin,
-          suggestedMax: suggestedMax
-        },
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-    },
-      animation: {
-        duration: 1
-      }
-    },
-  }
-}
-function getLabelsFromConfigChart(configChart) {
-  return configChart.data.labels;
-}
-function getDataFromConfigChart(configChart, datasetIndex) {
-  return configChart.data.datasets[datasetIndex].data;
-}
-const altitudeChartConfig = createChartConfig([{data: new Array(15), borderWidth: 4}], 0, 100);
-let newLabelBase = getLabelsFromConfigChart(altitudeChartConfig);
-let newAltitudeDatasetBase = getDataFromConfigChart(altitudeChartConfig, 0);
+
+let xAxisValues = new Array(15);
+let altitudeValues = new Array(15);
+let temperatureValues = new Array(15);
+let pressureValues = new Array(15);
+let acelerationXValues = new Array(15);
+let acelerationYValues = new Array(15);
+let acelerationZValues = new Array(15);
+let gyroXValues = new Array(15);
+let gyroYValues = new Array(15);
+let gyroZValues = new Array(15);
 
 pocketqubeSocket.onmessage = function(e) {
   const data = JSON.parse(e.data);
-  newLabelBase = insertNewDataInArray(newLabelBase, data.medition);
-  newAltitudeDatasetBase = insertNewDataInArray(newAltitudeDatasetBase, data.altitude);
+  xAxisValues = insertNewDataInArray(xAxisValues, data.medition);
+  altitudeValues = insertNewDataInArray(altitudeValues, data.altitude);
+  temperatureValues = insertNewDataInArray(temperatureValues, data.temperature);
+  pressureValues = insertNewDataInArray(pressureValues, data.pressure);
+  acelerationXValues = insertNewDataInArray(acelerationXValues, data.aceleration_x);
+  acelerationYValues = insertNewDataInArray(acelerationYValues, data.aceleration_y);
+  acelerationZValues = insertNewDataInArray(acelerationZValues, data.aceleration_z);
+  gyroXValues = insertNewDataInArray(gyroXValues, data.gyro_x);
+  gyroYValues = insertNewDataInArray(gyroYValues, data.gyro_y);
+  gyroZValues = insertNewDataInArray(gyroZValues, data.gyro_z);
 }

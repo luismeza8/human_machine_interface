@@ -28,7 +28,6 @@ class PocketQubeConsumer(AsyncWebsocketConsumer):
                 }
                 await self.send(json.dumps(data))
                 last_medition = medition.medition
-            await sleep(0.2)
 
 
 class AltitudeConsumer(AsyncWebsocketConsumer):

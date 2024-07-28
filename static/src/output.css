@@ -700,6 +700,10 @@ video {
   width: 60%;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -843,4 +847,8 @@ video {
 .text-secondary {
   --tw-text-opacity: 1;
   color: rgb(191 218 237 / var(--tw-text-opacity));
+}
+
+.hover\:underline:hover {
+  text-decoration-line: underline;
 }
