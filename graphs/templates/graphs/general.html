@@ -1,10 +1,7 @@
-{% load static %}
-<link rel="stylesheet" href='{% static "src/output.css" %}'>
-
-{% block content %}
 <div class='bg-white flex flex-col h-screen w-full px-8 py-4'>
   <!--<div class='mb-4 w-full h-[8%] text-primary text-4xl'>Misión Jeeka</div>-->
 
+  <!-- Status container start -->
   <div class='flex mb-4 bg-secondary w-full h-[500px] rounded-3xl'>
 
     <div class='py-5 px-8 m-1 w-[20%]'>
@@ -41,9 +38,11 @@
         <div class='text-lg'>Señal GPS</div>
         <div class='mb-2 font-bold text-3xl'>00.00</div>
       </div>
-</div>
+    </div>
   </div>
+  <!-- Status container end -->
 
+  <!-- Charts container start -->
   <div class='px-9 bg-secondary w-full h-fit overflow-y-auto rounded-3xl'>
 
     <div class='w-full flex justify-evenly items-center'>
@@ -62,7 +61,6 @@
         <h3 class='text-primary font-bold text-lg mb-1'>Aceleraciones</h3>
         <canvas class='p-2 bg-white rounded-xl' id='acelerations_canvas'></canvas>
       </div>
-
       <div class='flex flex-col items-center my-4 mr-4 ml-2 w-1/2'>
         <h3 class='text-primary font-bold text-lg mb-1'>Gyro</h3>
         <canvas class='p-2 bg-white rounded-xl' id='gyros_canvas'></canvas>
@@ -75,7 +73,7 @@
         <canvas class='p-2 bg-white rounded-xl' id='pressure_canvas'></canvas>
       </div>
     </div>
-  </div>
-</div>
 
-{% endblock %}
+  </div>
+  <!-- Charts container end -->
+</div>

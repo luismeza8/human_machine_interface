@@ -4,8 +4,7 @@ from django.shortcuts import render
 from graphs.models import Medition
 
 def index(request):
-    template = 'graphs/index.html' if request.htmx else 'graphs/index_full.html'
-    return render(request, template)
+    return render(request, 'graphs/base.html')
 
 
 def medition(request):
