@@ -49,7 +49,7 @@
     <div class='w-full flex justify-evenly items-center'>
       <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
         <h3 class='text-primary font-bold text-lg mb-1'>Altitud</h3>
-        <canvas class='p-2 bg-white rounded-xl' id="altitude_canvas"></canvas>
+        <canvas class='altitude_canvas p-2 bg-white rounded-xl' id="altitude_canvas"></canvas>
       </div>
       <div class='flex flex-col items-center my-4 mr-4 ml-2 w-1/2'>
         <h3 class='text-primary font-bold text-lg mb-1'>Temperatura</h3>
@@ -78,6 +78,4 @@
   </div>
 </div>
 
-<script type='text/javascript' src="{% static 'js/chart.umd.min.js' %}" defer></script>
-<script type='text/javascript' src="{% static 'js/index.js' %}" defer></script>
 {% endblock %}

@@ -579,6 +579,16 @@ video {
   margin-bottom: 1rem;
 }
 
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.mx-14 {
+  margin-left: 3.5rem;
+  margin-right: 3.5rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -641,6 +651,10 @@ video {
 
 .flex {
   display: flex;
+}
+
+.hidden {
+  display: none;
 }
 
 .h-\[40\%\] {
@@ -746,6 +760,18 @@ video {
 
 .w-\[300px\] {
   width: 300px;
+}
+
+.w-\[90\%\] {
+  width: 90%;
+}
+
+.w-\[400px\] {
+  width: 400px;
+}
+
+.max-w-\[50\%\] {
+  max-width: 50%;
 }
 
 .cursor-pointer {

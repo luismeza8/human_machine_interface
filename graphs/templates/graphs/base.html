@@ -6,23 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link href="{% static 'src/output.css' %}" rel="stylesheet">
-  <script type='text/javascript' src='{% static "js/htmx.min.js" %}'></script>
-  <script type='text/javascript' src='{% static "js/base.js" %}'></script>
 </head>
 <body class='flex w-full h-screen'>
   <aside class='p-4 flex flex-col items-center bg-primary w-[200px] h-screen'>
     <div class='h-[120px] w-[120px] rounded-full bg-secondary'></div>
     <div class='mt-16'>
-        <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
-          hx-get='{% url "index" %}'
-          hx-target='#content'
-          hx-push-url='true'>
+        <div id='generalBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
           General
         </div>
-        <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
-          hx-get='{% url "atmosfera" %}'
-          hx-target='#content'
-          hx-push-url='true'>
+        <div id='atmosferaBtn'
+          class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
           Atmosfera
         </div>
         <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'
@@ -40,9 +33,19 @@
     </div>
   </aside>
   <main id='content' class='h-screen w-screen box-border overflow-y-auto'>
-    {% block content %}
-    {% endblock %}
+    <div id="general">
+      {% include "graphs/index.html" %}
+    </div>
+
+    <div id='atmosfera' class='hidden'>
+      {% include "graphs/atmosfera.html" %}
+    </div>
+
   </main>
 </body>
+  <script type='text/javascript' src="{% static 'js/chart.umd.min.js' %}" defer></script>
+  <script type='text/javascript' src="{% static 'js/index.js' %}" defer></script>
+  <script type='text/javascript' src='{% static "js/htmx.min.js" %}'></script>
+  <script type='text/javascript' src='{% static "js/base.js" %}'></script>
 </html>
 

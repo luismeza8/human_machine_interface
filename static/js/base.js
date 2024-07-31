@@ -30,3 +30,19 @@ pocketqubeSocket.onmessage = function(e) {
   gyroYValues = insertNewDataInArray(gyroYValues, data.gyro_y);
   gyroZValues = insertNewDataInArray(gyroZValues, data.gyro_z);
 }
+
+const general = document.getElementById('general');
+const atmosfera = document.getElementById('atmosfera');
+
+const atmosferaBtn = document.getElementById('atmosferaBtn');
+const generalBtn = document.getElementById('generalBtn');
+
+atmosferaBtn.onclick = function() {
+  general.classList.add('hidden');
+  atmosfera.classList.remove('hidden');
+}
+
+generalBtn.onclick = function() {
+  atmosfera.classList.add('hidden');
+  general.classList.remove('hidden');
+}
