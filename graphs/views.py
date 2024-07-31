@@ -8,21 +8,6 @@ def index(request):
     return render(request, template)
 
 
-def atmosfera(request):
-    template = 'graphs/atmosfera.html' if request.htmx else 'graphs/atmosfera_full.html'
-    return render(request, template)
-
-
-def estructura(request):
-    template = 'graphs/estructura.html' if request.htmx else 'graphs/estructura_full.html'
-    return render(request, template)
-
-
-def mensajeria(request):
-    template = 'graphs/mensajeria.html' if request.htmx else 'graphs/mensajeria_full.html'
-    return render(request, template)
-
-
 def medition(request):
     if request.method == 'GET':
         medition = Medition()
@@ -42,18 +27,10 @@ def medition(request):
         medition.save()
         return HttpResponse('Medition saved.')
 
-    return HttpResponse('yepa')
+    return HttpResponse('POST is not allow.')
 
 
 def meditions(request):
     meditions = Medition.objects.all()
     return render(request, 'graphs/meditions.html', {'meditions': meditions})
 
-
-def altitude_graph(request):
-    altitudes = Medition.objects.values_list('altitude', flat=True)
-    x_axe = []
-    for i in range(len(altitudes)):
-        x_axe.append(i)
-
-    return render(request, 'graphs/altitude_graph.html', {'altitudes': list(altitudes), 'x_axe': x_axe})
