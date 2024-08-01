@@ -13,6 +13,14 @@
   const altitudeMaxRange = document.getElementById('altitude_max_range');
   const altitudeMinRange = document.getElementById('altitude_min_range');
 
+  const temperatureAddMaxRange = document.getElementById('temperature_add_max_range');
+  const temperatureMinusMaxRange = document.getElementById('temperature_minus_max_range');
+  const temperatureAddMinRange = document.getElementById('temperature_add_min_range');
+  const temperatureMinusMinRange = document.getElementById('temperature_minus_min_range');
+
+  const temperatureMaxRange = document.getElementById('temperature_max_range');
+  const temperatureMinRange = document.getElementById('temperature_min_range');
+
   function createChartConfig(datasets, suggestedMin, suggestedMax) {
     return {
       type: 'line',
@@ -79,6 +87,8 @@
 
   altitudeMaxRange.innerHTML = altitudeChartConfig.options.scales.y.suggestedMax;
   altitudeMinRange.innerHTML = altitudeChartConfig.options.scales.y.suggestedMin;
+  temperatureMaxRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMax;
+  temperatureMinRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMin;
 
   altitudeAddMaxRange.onclick = () => {
     altitudeChartConfig.options.scales.y.suggestedMax += 10;
@@ -98,6 +108,26 @@
   altitudeMinusMinRange.onclick = () => {
     altitudeChartConfig.options.scales.y.suggestedMin -= 10;
     altitudeMinRange.innerHTML = altitudeChartConfig.options.scales.y.suggestedMin;
+  }
+
+  temperatureAddMaxRange.onclick = () => {
+    temperatureChartConfig.options.scales.y.suggestedMax += 5;
+    temperatureMaxRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMax;
+  }
+
+  temperatureMinusMaxRange.onclick = () => {
+    temperatureChartConfig.options.scales.y.suggestedMax -= 5;
+    temperatureMaxRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMax;
+  }
+
+  temperatureAddMinRange.onclick = () => {
+    temperatureChartConfig.options.scales.y.suggestedMin += 5;
+    temperatureMinRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMin;
+  }
+
+  temperatureMinusMinRange.onclick = () => {
+    temperatureChartConfig.options.scales.y.suggestedMin -= 5;
+    temperatureMinRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMin;
   }
 
   setInterval(function() {
