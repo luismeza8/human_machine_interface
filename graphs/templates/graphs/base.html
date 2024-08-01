@@ -18,14 +18,13 @@
         <div id='generalBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
           General
         </div>
-        <div id='atmosferaBtn'
-          class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+        <div id='atmosferaBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
           Atmosfera
         </div>
-        <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+        <div id='estructuraBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
           Estructura
         </div>
-        <div class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+        <div id='mensajeriaBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
           Mensajeria
         </div>
     </div>
@@ -40,6 +39,14 @@
 
     <div id='atmosfera' class='hidden'>
       {% include "graphs/atmosfera.html" %}
+    </div>
+
+    <div id='estructura' class='hidden'>
+      {% include "graphs/estructura.html" %}
+    </div>
+
+    <div id="mensajeria" class='hidden'>
+      {% include "graphs/mensajeria.html" %}
     </div>
   </main>
   <!-- Content end -->
