@@ -93,18 +93,60 @@
     <div class='flex justify-evenly'>
       <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
         <h3 class='text-primary font-bold text-lg mb-1'>Aceleraciones</h3>
-        <canvas class='p-2 bg-white rounded-xl' id='acelerations_canvas'></canvas>
+        <canvas class='mb-4 p-2 bg-white rounded-xl' id='acelerations_canvas'></canvas>
+        <div class='flex w-full'>
+          <div class='flex'>
+            <p>Margen inferior:</p>
+            <button id='acelerations_add_min_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+            <p id='acelerations_min_range'></p>
+            <button id='acelerations_minus_min_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+          </div>
+          <div class='flex'>
+            <p>Margen superior:</p>
+            <button id='acelerations_add_max_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+            <p id='acelerations_max_range'></p>
+            <button id='acelerations_minus_max_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+          </div>
+        </div>
       </div>
       <div class='flex flex-col items-center my-4 mr-4 ml-2 w-1/2'>
         <h3 class='text-primary font-bold text-lg mb-1'>Gyro</h3>
-        <canvas class='p-2 bg-white rounded-xl' id='gyros_canvas'></canvas>
+        <canvas class='mb-4 p-2 bg-white rounded-xl' id='gyros_canvas'></canvas>
+        <div class='flex w-full'>
+          <div class='flex'>
+            <p>Margen inferior:</p>
+            <button id='gyros_add_min_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+            <p id='gyros_min_range'></p>
+            <button id='gyros_minus_min_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+          </div>
+          <div class='flex'>
+            <p>Margen superior:</p>
+            <button id='gyros_add_max_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+            <p id='gyros_max_range'></p>
+            <button id='gyros_minus_max_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class='flex justify-evenly'>
       <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
         <h3 class='text-primary font-bold text-lg mb-1'>Presión atmosferica</h3>
-        <canvas class='p-2 bg-white rounded-xl' id='pressure_canvas'></canvas>
+        <canvas class='mb-4 p-2 bg-white rounded-xl' id='pressure_canvas'></canvas>
+        <div class='flex w-full'>
+          <div class='flex'>
+            <p>Margen inferior:</p>
+            <button id='pressure_add_min_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+            <p id='pressure_min_range'></p>
+            <button id='pressure_minus_min_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+          </div>
+          <div class='flex'>
+            <p>Margen superior:</p>
+            <button id='pressure_add_max_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+            <p id='pressure_max_range'></p>
+            <button id='pressure_minus_max_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+          </div>
+        </div>
       </div>
     </div>
 

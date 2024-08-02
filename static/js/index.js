@@ -21,6 +21,30 @@
   const temperatureMaxRange = document.getElementById('temperature_max_range');
   const temperatureMinRange = document.getElementById('temperature_min_range');
 
+  const acelerationsAddMaxRange = document.getElementById('acelerations_add_max_range');
+  const acelerationsMinusMaxRange = document.getElementById('acelerations_minus_max_range');
+  const acelerationsAddMinRange = document.getElementById('acelerations_add_min_range');
+  const acelerationsMinusMinRange = document.getElementById('acelerations_minus_min_range');
+
+  const acelerationsMaxRange = document.getElementById('acelerations_max_range');
+  const acelerationsMinRange = document.getElementById('acelerations_min_range');
+
+  const gyrosAddMaxRange = document.getElementById('gyros_add_max_range');
+  const gyrosMinusMaxRange = document.getElementById('gyros_minus_max_range');
+  const gyrosAddMinRange = document.getElementById('gyros_add_min_range');
+  const gyrosMinusMinRange = document.getElementById('gyros_minus_min_range');
+
+  const gyrosMaxRange = document.getElementById('gyros_max_range');
+  const gyrosMinRange = document.getElementById('gyros_min_range');
+
+  const pressureAddMaxRange = document.getElementById('pressure_add_max_range');
+  const pressureMinusMaxRange = document.getElementById('pressure_minus_max_range');
+  const pressureAddMinRange = document.getElementById('pressure_add_min_range');
+  const pressureMinusMinRange = document.getElementById('pressure_minus_min_range');
+
+  const pressureMaxRange = document.getElementById('pressure_max_range');
+  const pressureMinRange = document.getElementById('pressure_min_range');
+
   function createChartConfig(datasets, suggestedMin, suggestedMax) {
     return {
       type: 'line',
@@ -70,6 +94,12 @@
   altitudeMinRange.innerHTML = altitudeChartConfig.options.scales.y.suggestedMin;
   temperatureMaxRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMax;
   temperatureMinRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMin;
+  acelerationsMaxRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMax;
+  acelerationsMinRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMin;
+  gyrosMaxRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMax;
+  gyrosMinRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMin;
+  pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
+  pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
 
   altitudeAddMaxRange.onclick = () => {
     altitudeChartConfig.options.scales.y.suggestedMax += 10;
@@ -109,6 +139,66 @@
   temperatureMinusMinRange.onclick = () => {
     temperatureChartConfig.options.scales.y.suggestedMin -= 5;
     temperatureMinRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMin;
+  }
+
+  acelerationsAddMaxRange.onclick = () => {
+    acelerationsChartConfig.options.scales.y.suggestedMax += 5;
+    acelerationsMaxRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMax;
+  }
+
+  acelerationsMinusMaxRange.onclick = () => {
+    acelerationsChartConfig.options.scales.y.suggestedMax -= 5;
+    acelerationsMaxRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMax;
+  }
+
+  acelerationsAddMinRange.onclick = () => {
+    acelerationsChartConfig.options.scales.y.suggestedMin += 5;
+    acelerationsMinRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMin;
+  }
+
+  acelerationsMinusMinRange.onclick = () => {
+    acelerationsChartConfig.options.scales.y.suggestedMin -= 5;
+    acelerationsMinRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMin;
+  }
+
+  gyrosAddMaxRange.onclick = () => {
+    gyrosChartConfig.options.scales.y.suggestedMax += 5;
+    gyrosMaxRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMax;
+  }
+
+  gyrosMinusMaxRange.onclick = () => {
+    gyrosChartConfig.options.scales.y.suggestedMax -= 5;
+    gyrosMaxRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMax;
+  }
+
+  gyrosAddMinRange.onclick = () => {
+    gyrosChartConfig.options.scales.y.suggestedMin += 5;
+    gyrosMinRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMin;
+  }
+
+  gyrosMinusMinRange.onclick = () => {
+    gyrosChartConfig.options.scales.y.suggestedMin -= 5;
+    gyrosMinRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMin;
+  }
+
+  pressureAddMaxRange.onclick = () => {
+    pressureChartConfig.options.scales.y.suggestedMax += 5;
+    pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
+  }
+
+  pressureMinusMaxRange.onclick = () => {
+    pressureChartConfig.options.scales.y.suggestedMax -= 5;
+    pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
+  }
+
+  pressureAddMinRange.onclick = () => {
+    pressureChartConfig.options.scales.y.suggestedMin += 5;
+    pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
+  }
+
+  pressureMinusMinRange.onclick = () => {
+    pressureChartConfig.options.scales.y.suggestedMin -= 5;
+    pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
   }
 
   setInterval(function() {
