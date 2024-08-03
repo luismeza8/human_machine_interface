@@ -1,16 +1,7 @@
 (()=>{
-  const temperatureCanvas = document.getElementById('temperature_canvas');
   const pressureCanvas = document.getElementById('pressure_canvas');
   const acelerationsCanvas = document.getElementById('acelerations_canvas');
   const gyrosCanvas = document.getElementById('gyros_canvas');
-
-  const temperatureAddMaxRange = document.getElementById('temperature_add_max_range');
-  const temperatureMinusMaxRange = document.getElementById('temperature_minus_max_range');
-  const temperatureAddMinRange = document.getElementById('temperature_add_min_range');
-  const temperatureMinusMinRange = document.getElementById('temperature_minus_min_range');
-
-  const temperatureMaxRange = document.getElementById('temperature_max_range');
-  const temperatureMinRange = document.getElementById('temperature_min_range');
 
   const acelerationsAddMaxRange = document.getElementById('acelerations_add_max_range');
   const acelerationsMinusMaxRange = document.getElementById('acelerations_minus_max_range');
@@ -61,7 +52,6 @@
       },
     }
   }
-  const temperatureChartConfig = createChartConfig([{label: 'Temperatura', data: temperatureValues, borderWidth: 4, borderColor: 'rgb(255, 0, 0)'}], 20, 30);
   const pressureChartConfig = createChartConfig([{label: 'Presion', data: pressureValues, borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}], 1000, 1100);
   const acelerationsChartConfig = createChartConfig([
     {label: 'X', data: acelerationXValues, borderWidth: 4, borderColor: 'rgb(255, 255, 0)'},
@@ -74,39 +64,16 @@
     {label: 'Z', data: gyroZValues, borderWidth: 4, borderColor: 'rgb(0, 127, 0)'},
   ], 0, 2) 
 
-  const temperatureChart = new Chart(temperatureCanvas, temperatureChartConfig);
   const pressureChart = new Chart(pressureCanvas, pressureChartConfig);
   const acelerationsChart = new Chart(acelerationsCanvas, acelerationsChartConfig);
   const gyrosChart = new Chart(gyrosCanvas, gyrosChartConfig);
 
-  temperatureMaxRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMax;
-  temperatureMinRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMin;
   acelerationsMaxRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMax;
   acelerationsMinRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMin;
   gyrosMaxRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMax;
   gyrosMinRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMin;
   pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
   pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
-
-  temperatureAddMaxRange.onclick = () => {
-    temperatureChartConfig.options.scales.y.suggestedMax += 5;
-    temperatureMaxRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMax;
-  }
-
-  temperatureMinusMaxRange.onclick = () => {
-    temperatureChartConfig.options.scales.y.suggestedMax -= 5;
-    temperatureMaxRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMax;
-  }
-
-  temperatureAddMinRange.onclick = () => {
-    temperatureChartConfig.options.scales.y.suggestedMin += 5;
-    temperatureMinRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMin;
-  }
-
-  temperatureMinusMinRange.onclick = () => {
-    temperatureChartConfig.options.scales.y.suggestedMin -= 5;
-    temperatureMinRange.innerHTML = temperatureChartConfig.options.scales.y.suggestedMin;
-  }
 
   acelerationsAddMaxRange.onclick = () => {
     acelerationsChartConfig.options.scales.y.suggestedMax += 5;
@@ -169,8 +136,6 @@
   }
 
   setInterval(function() {
-    //altitudeChart.update();
-    temperatureChart.update();
     pressureChart.update();
     acelerationsChart.update();
     gyrosChart.update();
