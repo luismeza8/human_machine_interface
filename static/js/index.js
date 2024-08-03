@@ -1,14 +1,5 @@
 (()=>{
-  const acelerationsCanvas = document.getElementById('acelerations_canvas');
   const gyrosCanvas = document.getElementById('gyros_canvas');
-
-  const acelerationsAddMaxRange = document.getElementById('acelerations_add_max_range');
-  const acelerationsMinusMaxRange = document.getElementById('acelerations_minus_max_range');
-  const acelerationsAddMinRange = document.getElementById('acelerations_add_min_range');
-  const acelerationsMinusMinRange = document.getElementById('acelerations_minus_min_range');
-
-  const acelerationsMaxRange = document.getElementById('acelerations_max_range');
-  const acelerationsMinRange = document.getElementById('acelerations_min_range');
 
   const gyrosAddMaxRange = document.getElementById('gyros_add_max_range');
   const gyrosMinusMaxRange = document.getElementById('gyros_minus_max_range');
@@ -43,44 +34,16 @@
       },
     }
   }
-  const acelerationsChartConfig = createChartConfig([
-    {label: 'X', data: acelerationXValues, borderWidth: 4, borderColor: 'rgb(255, 255, 0)'},
-    {label: 'Y', data: acelerationYValues, borderWidth: 4, borderColor: 'rgb(0, 255, 255)'},
-    {label: 'Z', data: acelerationZValues, borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}
-  ], 0, 2)
   const gyrosChartConfig = createChartConfig([
     {label: 'X', data: gyroXValues, borderWidth: 4, borderColor: 'rgb(127, 255, 0)'},
     {label: 'Y', data: gyroYValues, borderWidth: 4, borderColor: 'rgb(0, 255, 127)'},
     {label: 'Z', data: gyroZValues, borderWidth: 4, borderColor: 'rgb(0, 127, 0)'},
   ], 0, 2) 
 
-  const acelerationsChart = new Chart(acelerationsCanvas, acelerationsChartConfig);
   const gyrosChart = new Chart(gyrosCanvas, gyrosChartConfig);
 
-  acelerationsMaxRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMax;
-  acelerationsMinRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMin;
   gyrosMaxRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMax;
   gyrosMinRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMin;
-
-  acelerationsAddMaxRange.onclick = () => {
-    acelerationsChartConfig.options.scales.y.suggestedMax += 5;
-    acelerationsMaxRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMax;
-  }
-
-  acelerationsMinusMaxRange.onclick = () => {
-    acelerationsChartConfig.options.scales.y.suggestedMax -= 5;
-    acelerationsMaxRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMax;
-  }
-
-  acelerationsAddMinRange.onclick = () => {
-    acelerationsChartConfig.options.scales.y.suggestedMin += 5;
-    acelerationsMinRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMin;
-  }
-
-  acelerationsMinusMinRange.onclick = () => {
-    acelerationsChartConfig.options.scales.y.suggestedMin -= 5;
-    acelerationsMinRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMin;
-  }
 
   gyrosAddMaxRange.onclick = () => {
     gyrosChartConfig.options.scales.y.suggestedMax += 5;
@@ -103,7 +66,6 @@
   }
 
   setInterval(function() {
-    acelerationsChart.update();
     gyrosChart.update();
   }, 200);
 })();
