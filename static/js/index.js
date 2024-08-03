@@ -1,5 +1,4 @@
 (()=>{
-  const pressureCanvas = document.getElementById('pressure_canvas');
   const acelerationsCanvas = document.getElementById('acelerations_canvas');
   const gyrosCanvas = document.getElementById('gyros_canvas');
 
@@ -18,14 +17,6 @@
 
   const gyrosMaxRange = document.getElementById('gyros_max_range');
   const gyrosMinRange = document.getElementById('gyros_min_range');
-
-  const pressureAddMaxRange = document.getElementById('pressure_add_max_range');
-  const pressureMinusMaxRange = document.getElementById('pressure_minus_max_range');
-  const pressureAddMinRange = document.getElementById('pressure_add_min_range');
-  const pressureMinusMinRange = document.getElementById('pressure_minus_min_range');
-
-  const pressureMaxRange = document.getElementById('pressure_max_range');
-  const pressureMinRange = document.getElementById('pressure_min_range');
 
   function createChartConfig(datasets, suggestedMin, suggestedMax) {
     return {
@@ -52,7 +43,6 @@
       },
     }
   }
-  const pressureChartConfig = createChartConfig([{label: 'Presion', data: pressureValues, borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}], 1000, 1100);
   const acelerationsChartConfig = createChartConfig([
     {label: 'X', data: acelerationXValues, borderWidth: 4, borderColor: 'rgb(255, 255, 0)'},
     {label: 'Y', data: acelerationYValues, borderWidth: 4, borderColor: 'rgb(0, 255, 255)'},
@@ -64,7 +54,6 @@
     {label: 'Z', data: gyroZValues, borderWidth: 4, borderColor: 'rgb(0, 127, 0)'},
   ], 0, 2) 
 
-  const pressureChart = new Chart(pressureCanvas, pressureChartConfig);
   const acelerationsChart = new Chart(acelerationsCanvas, acelerationsChartConfig);
   const gyrosChart = new Chart(gyrosCanvas, gyrosChartConfig);
 
@@ -72,8 +61,6 @@
   acelerationsMinRange.innerHTML = acelerationsChartConfig.options.scales.y.suggestedMin;
   gyrosMaxRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMax;
   gyrosMinRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMin;
-  pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
-  pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
 
   acelerationsAddMaxRange.onclick = () => {
     acelerationsChartConfig.options.scales.y.suggestedMax += 5;
@@ -115,28 +102,7 @@
     gyrosMinRange.innerHTML = gyrosChartConfig.options.scales.y.suggestedMin;
   }
 
-  pressureAddMaxRange.onclick = () => {
-    pressureChartConfig.options.scales.y.suggestedMax += 5;
-    pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
-  }
-
-  pressureMinusMaxRange.onclick = () => {
-    pressureChartConfig.options.scales.y.suggestedMax -= 5;
-    pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
-  }
-
-  pressureAddMinRange.onclick = () => {
-    pressureChartConfig.options.scales.y.suggestedMin += 5;
-    pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
-  }
-
-  pressureMinusMinRange.onclick = () => {
-    pressureChartConfig.options.scales.y.suggestedMin -= 5;
-    pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
-  }
-
   setInterval(function() {
-    pressureChart.update();
     acelerationsChart.update();
     gyrosChart.update();
   }, 200);
