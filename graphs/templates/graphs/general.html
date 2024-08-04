@@ -46,7 +46,7 @@
   <div class='px-9 bg-secondary w-full h-fit overflow-y-auto rounded-3xl'>
 
     <div class='w-full flex justify-evenly items-center'>
-      {% include "graphs/charts/altitude.html" %}
+      {% include "graphs/charts/altitude.html" with canvas_name="altitude_canvas" %}
       {% include "graphs/charts/temperature.html" %}
     </div>
 

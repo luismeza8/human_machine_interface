@@ -2,10 +2,7 @@
 
 <div class='h-screen w-full px-8 py-4 flex'>
   <div class='flex mr-8 bg-secondary h-full w-full rounded-3xl'>
-    <div class='flex flex-col items-center my-4 mx-14 w-full'>
-      <h3 class='text-primary font-bold text-lg mb-1'>Altitud</h3>
-      <canvas class='p-2 bg-white rounded-xl' id="altitude_canvas_atmosfera"></canvas>
-    </div>
+    {% include "graphs/charts/altitude.html" with canvas_name="altitude_canvas_atmosfera" %}
   </div>
   {% include "graphs/right_sidebar.html" %}
 
