@@ -2,11 +2,8 @@
 
 <div class='h-screen w-full px-8 py-4 flex'>
   <div class='flex mr-8 bg-secondary h-full w-full rounded-3xl'>
-    {% include "graphs/charts/altitude.html" with canvas_name="altitude_canvas_atmosfera" %}
+    {% include "graphs/charts/altitude.html" with place="atmosfera" %}
   </div>
   {% include "graphs/right_sidebar.html" %}
-
-<script type='text/javascript' src="{% static 'js/chart.umd.min.js' %}" defer></script>
-<script type='text/javascript' src='{% static "js/atmosfera.js" %}' defer></script>
-
 </div>
+<script type='text/javascript' src='{% static "js/atmosfera.js" %}' defer></script>

@@ -1,19 +1,19 @@
 {% load static %}
 <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
   <h3 class='text-primary font-bold text-lg mb-1'>Altitud</h3>
-  <canvas class='mb-4 p-2 bg-white rounded-xl' id="{{ canvas_name }}"></canvas>
+  <canvas class='mb-4 p-2 bg-white rounded-xl' id="{{ place }}_altitude_canvas"></canvas>
   <div class='flex w-full'>
     <div class='flex'>
       <p>Margen inferior:</p>
-      <button id='altitude_add_min_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='altitude_min_range'></p>
-      <button id='altitude_minus_min_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <button id='{{ place }}_altitude_add_suggested_minimum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+      <p id='{{ place }}_altitude_suggested_minimum'></p>
+      <button id='{{ place }}_altitude_subtract_suggested_minimum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
     </div>
     <div class='flex'>
       <p>Margen superior:</p>
-      <button id='altitude_add_max_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='altitude_max_range'></p>
-      <button id='altitude_minus_max_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <button id='{{ place }}_altitude_add_suggested_maximum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+      <p id='{{ place }}_altitude_suggested_maximum'></p>
+      <button id='{{ place }}_altitude_subtract_suggested_maximum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
     </div>
   </div>
 </div>

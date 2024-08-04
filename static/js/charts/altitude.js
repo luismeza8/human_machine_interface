@@ -27,49 +27,35 @@ class AltitudeChart {
       }
     },
   }
-
   getChart() {
     return new Chart(this.altitudeCanvas, this.chartConfig);
   }
 
+  getSuggestedMinimum(chart) {
+    return chart.config.options.scales.y.suggestedMin;
+  }
+
+  getSuggestedMaximum(chart) {
+    return chart.config.options.scales.y.suggestedMax;
+  }
+
+  addToSuggestedMinimum(chart) {
+    chart.config.options.scales.y.suggestedMin += 50;
+    return chart;
+  }
+
+  subtractFromSuggestedMinimum(chart) {
+    chart.config.options.scales.y.suggestedMin -= 50;
+    return chart;
+  }
+
+  addToSuggestedMaximum(chart) {
+    chart.config.options.scales.y.suggestedMax += 50;
+    return chart;
+  }
+
+  subtractFromSuggestedMaximum(chart) {
+    chart.config.options.scales.y.suggestedMax -= 50;
+    return chart;
+  }
 }
-
-
-const altitudeCanvas = document.getElementById('altitude_canvas');
-
-const altitudeAddMaxRange = document.getElementById('altitude_add_max_range');
-const altitudeMinusMaxRange = document.getElementById('altitude_minus_max_range');
-const altitudeAddMinRange = document.getElementById('altitude_add_min_range');
-const altitudeMinusMinRange = document.getElementById('altitude_minus_min_range');
-
-const altitudeMaxRange = document.getElementById('altitude_max_range');
-const altitudeMinRange = document.getElementById('altitude_min_range');
-
-
-
-/*
-altitudeMaxRange.innerHTML = chartConfig.options.scales.y.suggestedMax;
-altitudeMinRange.innerHTML = chartConfig.options.scales.y.suggestedMin;
-
-altitudeAddMaxRange.onclick = () => {
-  chartConfig.options.scales.y.suggestedMax += 10;
-  altitudeMaxRange.innerHTML = chartConfig.options.scales.y.suggestedMax;
-}
-
-altitudeMinusMaxRange.onclick = () => {
-  chartConfig.options.scales.y.suggestedMax -= 10;
-  altitudeMaxRange.innerHTML = chartConfig.options.scales.y.suggestedMax;
-}
-
-altitudeAddMinRange.onclick = () => {
-  chartConfig.options.scales.y.suggestedMin += 10;
-  altitudeMinRange.innerHTML = chartConfig.options.scales.y.suggestedMin;
-}
-
-altitudeMinusMinRange.onclick = () => {
-  chartConfig.options.scales.y.suggestedMin -= 10;
-  altitudeMinRange.innerHTML = chartConfig.options.scales.y.suggestedMin;
-}
-
-setInterval(() => { altitudeChart.update() }, 200);
-*/
