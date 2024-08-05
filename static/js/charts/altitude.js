@@ -1,6 +1,6 @@
 class AltitudeChart {
   constructor(canvasName) {
-    this.altitudeCanvas = document.getElementById(canvasName);
+    this.canvas = document.getElementById(canvasName);
   }
   chartConfig = {
     type: 'line',
@@ -28,7 +28,7 @@ class AltitudeChart {
     },
   }
   getChart() {
-    return new Chart(this.altitudeCanvas, this.chartConfig);
+    return new Chart(this.canvas, this.chartConfig);
   }
 
   getSuggestedMinimum(chart) {

@@ -1,33 +1,63 @@
 (() => {
-  const suggestedMinimum = document.getElementById('general_altitude_suggested_minimum');
-  const suggestedMaximum = document.getElementById('general_altitude_suggested_maximum');
-  const altitudeChart = new AltitudeChart('general_altitude_canvas');
+  // Altitude Chart start
+  const altitudeSuggestedMinimum = document.getElementById('general_altitude_suggested_minimum');
+  const altitudeSuggestedMaximum = document.getElementById('general_altitude_suggested_maximum');
+  const altitudeChartClass = new AltitudeChart('general_altitude_canvas');
 
-  let chart = altitudeChart.getChart()
+  let altitudeChart = altitudeChartClass.getChart()
 
-  suggestedMinimum.innerText = altitudeChart.getSuggestedMinimum(chart);
-  suggestedMaximum.innerText = altitudeChart.getSuggestedMaximum(chart);
+  altitudeSuggestedMinimum.innerText = altitudeChartClass.getSuggestedMinimum(altitudeChart);
+  altitudeSuggestedMaximum.innerText = altitudeChartClass.getSuggestedMaximum(altitudeChart);
 
   document.getElementById('general_altitude_add_suggested_minimum_button').onclick = () => {
-    chart = altitudeChart.addToSuggestedMinimum(chart);
-    suggestedMinimum.innerText = altitudeChart.getSuggestedMinimum(chart);
+    altitudeChart = altitudeChartClass.addToSuggestedMinimum(altitudeChart);
+    altitudeSuggestedMinimum.innerText = altitudeChartClass.getSuggestedMinimum(altitudeChart);
   }
   document.getElementById('general_altitude_subtract_suggested_minimum_button').onclick = () => {
-    chart = altitudeChart.subtractFromSuggestedMinimum(chart);
-    suggestedMinimum.innerText = altitudeChart.getSuggestedMinimum(chart);
+    altitudeChart = altitudeChartClass.subtractFromSuggestedMinimum(altitudeChart);
+    altitudeSuggestedMinimum.innerText = altitudeChartClass.getSuggestedMinimum(altitudeChart);
   }
   document.getElementById('general_altitude_add_suggested_maximum_button').onclick = () => {
-    chart = altitudeChart.addToSuggestedMaximum(chart);
-    suggestedMaximum.innerText = altitudeChart.getSuggestedMaximum(chart);
+    altitudeChart = altitudeChartClass.addToSuggestedMaximum(altitudeChart);
+    altitudeSuggestedMaximum.innerText = altitudeChartClass.getSuggestedMaximum(altitudeChart);
   }
   document.getElementById('general_altitude_subtract_suggested_maximum_button').onclick = () => {
-    chart = altitudeChart.subtractFromSuggestedMaximum(chart);
-    suggestedMaximum.innerText = altitudeChart.getSuggestedMaximum(chart);
+    altitudeChart = altitudeChartClass.subtractFromSuggestedMaximum(altitudeChart);
+    altitudeSuggestedMaximum.innerText = altitudeChartClass.getSuggestedMaximum(altitudeChart);
+  }
+  // Altitude Chart end
+
+  // Temperature Chart start
+  const temperatureSuggestedMinimum = document.getElementById('general_temperature_suggested_minimum');
+  const temperatureSuggestedMaximum = document.getElementById('general_temperature_suggested_maximum');
+  const temperatureChartClass = new TemperatureChart('general_temperature_canvas');
+
+  let temperatureChart = temperatureChartClass.getChart();
+
+  temperatureSuggestedMinimum.innerText = altitudeChartClass.getSuggestedMinimum(altitudeChart);
+  temperatureSuggestedMaximum.innerText = altitudeChartClass.getSuggestedMaximum(altitudeChart);
+
+  document.getElementById('general_temperature_add_suggested_minimum_button').onclick = () => {
+    temperatureChart = temperatureChartClass.addToSuggestedMinimum(temperatureChart);
+    temperatureSuggestedMinimum.innerText = temperatureChartClass.getSuggestedMinimum(temperatureChart);
+  }
+  document.getElementById('general_altitude_subtract_suggested_minimum_button').onclick = () => {
+    altitudeChart = altitudeChartClass.subtractFromSuggestedMinimum(altitudeChart);
+    altitudeSuggestedMinimum.innerText = altitudeChartClass.getSuggestedMinimum(altitudeChart);
+  }
+  document.getElementById('general_altitude_add_suggested_maximum_button').onclick = () => {
+    altitudeChart = altitudeChartClass.addToSuggestedMaximum(altitudeChart);
+    altitudeSuggestedMaximum.innerText = altitudeChartClass.getSuggestedMaximum(altitudeChart);
+  }
+  document.getElementById('general_altitude_subtract_suggested_maximum_button').onclick = () => {
+    altitudeChart = altitudeChartClass.subtractFromSuggestedMaximum(altitudeChart);
+    altitudeSuggestedMaximum.innerText = altitudeChartClass.getSuggestedMaximum(altitudeChart);
   }
 
+  // Temperature Chart end
   setInterval(() => {
-    chart.update();
+    temperatureChart.update();
+    altitudeChart.update();
   }, 200);
-
 })();
 
