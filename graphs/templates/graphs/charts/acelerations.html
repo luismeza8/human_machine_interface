@@ -1,21 +1,20 @@
 {% load static %}
 <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
   <h3 class='text-primary font-bold text-lg mb-1'>Aceleraciones</h3>
-  <canvas class='mb-4 p-2 bg-white rounded-xl' id='acelerations_canvas'></canvas>
+  <canvas class='mb-4 p-2 bg-white rounded-xl' id='{{ place }}_acelerations_canvas'></canvas>
   <div class='flex w-full'>
     <div class='flex'>
       <p>Margen inferior:</p>
-      <button id='acelerations_add_min_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='acelerations_min_range'></p>
-      <button id='acelerations_minus_min_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <button id='{{ place }}_acelerations_add_suggested_minimum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+      <p id='{{ place }}_acelerations_suggested_minimum'></p>
+      <button id='{{ place }}_acelerations_subtract_suggested_minimum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
     </div>
     <div class='flex'>
       <p>Margen superior:</p>
-      <button id='acelerations_add_max_range' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='acelerations_max_range'></p>
-      <button id='acelerations_minus_max_range' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <button id='{{ place }}_acelerations_add_suggested_maximum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
+      <p id='{{ place }}_acelerations_suggested_maximum'></p>
+      <button id='{{ place }}_acelerations_subtract_suggested_maximum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
     </div>
   </div>
 </div>
 
-<script defer type='text/javascript' src='{% static "js/charts/acelerations.js" %}'></script>

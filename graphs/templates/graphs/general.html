@@ -51,12 +51,12 @@
     </div>
 
     <div class='flex justify-evenly'>
-      {% include "graphs/charts/acelerations.html" %}
-      {% include "graphs/charts/gyros.html" %}
+      {% include "graphs/charts/acelerations.html" with place="general" %}
+      {% include "graphs/charts/gyros.html" with place="general" %}
     </div>
 
     <div class='flex justify-evenly'>
-      {% include "graphs/charts/pressure.html" %}
+      {% include "graphs/charts/pressure.html" with place="general" %}
     </div>
 
   </div>
