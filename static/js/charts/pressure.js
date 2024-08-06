@@ -1,60 +1,61 @@
-const pressureCanvas = document.getElementById('pressure_canvas');
-
-const pressureAddMaxRange = document.getElementById('pressure_add_max_range');
-const pressureMinusMaxRange = document.getElementById('pressure_minus_max_range');
-const pressureAddMinRange = document.getElementById('pressure_add_min_range');
-const pressureMinusMinRange = document.getElementById('pressure_minus_min_range');
-
-const pressureMaxRange = document.getElementById('pressure_max_range');
-const pressureMinRange = document.getElementById('pressure_min_range');
-
-const pressureChartConfig = {
-  type: 'line',
-  data: {
-    labels: xAxisValues,
-    datasets: [{
-      data: pressureValues
-    }]
-  },
-  options: {
-    scales: {
-      y: {
-        suggestedMin: -100,
-        suggestedMax: 100
-      },
+class PressureChart {
+  constructor(canvasName) {
+    this.canvas = document.getElementById(canvasName);
+  }
+  chartConfig = {
+    type: 'line',
+    data: {
+      labels: xAxisValues,
+      datasets: [{
+        data: pressureValues
+      }]
     },
-    plugins: {
-      legend: {
-        display: false,
+    options: {
+      scales: {
+        y: {
+          suggestedMin: 500,
+          suggestedMax: 1200
+        },
       },
-  },
-    animation: {
-      duration: 1
-    }
-  },
-}
-const pressureChart = new Chart(pressureCanvas, pressureChartConfig);
-pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
-pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
+      plugins: {
+        legend: {
+          display: false,
+        },
+    },
+      animation: {
+        duration: 1
+      }
+    },
+  }
+  getChart() {
+    return new Chart(this.canvas, this.chartConfig);
+  }
 
-pressureAddMaxRange.onclick = () => {
-  pressureChartConfig.options.scales.y.suggestedMax += 5;
-  pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
-}
+  getSuggestedMinimum(chart) {
+    return chart.config.options.scales.y.suggestedMin;
+  }
 
-pressureMinusMaxRange.onclick = () => {
-  pressureChartConfig.options.scales.y.suggestedMax -= 5;
-  pressureMaxRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMax;
-}
+  getSuggestedMaximum(chart) {
+    return chart.config.options.scales.y.suggestedMax;
+  }
 
-pressureAddMinRange.onclick = () => {
-  pressureChartConfig.options.scales.y.suggestedMin += 5;
-  pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
-}
+  addToSuggestedMinimum(chart) {
+    chart.config.options.scales.y.suggestedMin += 50;
+    return chart;
+  }
 
-pressureMinusMinRange.onclick = () => {
-  pressureChartConfig.options.scales.y.suggestedMin -= 5;
-  pressureMinRange.innerHTML = pressureChartConfig.options.scales.y.suggestedMin;
-}
+  subtractFromSuggestedMinimum(chart) {
+    chart.config.options.scales.y.suggestedMin -= 50;
+    return chart;
+  }
 
-setInterval(() => { pressureChart.update() }, 200);
+  addToSuggestedMaximum(chart) {
+    chart.config.options.scales.y.suggestedMax += 50;
+    return chart;
+  }
+
+  subtractFromSuggestedMaximum(chart) {
+    chart.config.options.scales.y.suggestedMax -= 50;
+    return chart;
+  }
+}

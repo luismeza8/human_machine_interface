@@ -110,13 +110,43 @@
     gyrosChart = gyrosChartClass.subtractFromSuggestedMaximum(gyrosChart);
     gyrosSuggestedMaximum.innerText = gyrosChartClass.getSuggestedMaximum(gyrosChart);
   }
-
   // Acelerations Chart end
+  // Pressure Chart start
+  const pressureSuggestedMinimum = document.getElementById('general_pressure_suggested_minimum');
+  const pressureSuggestedMaximum = document.getElementById('general_pressure_suggested_maximum');
+  const pressureChartClass = new PressureChart('general_pressure_canvas');
+
+  let pressureChart = pressureChartClass.getChart()
+
+  pressureSuggestedMinimum.innerText = pressureChartClass.getSuggestedMinimum(pressureChart);
+  pressureSuggestedMaximum.innerText = pressureChartClass.getSuggestedMaximum(pressureChart);
+
+  document.getElementById('general_pressure_add_suggested_minimum_button').onclick = () => {
+    pressureChart = pressureChartClass.addToSuggestedMinimum(pressureChart);
+    pressureSuggestedMinimum.innerText = pressureChartClass.getSuggestedMinimum(pressureChart);
+  }
+  document.getElementById('general_pressure_subtract_suggested_minimum_button').onclick = () => {
+    pressureChart = pressureChartClass.subtractFromSuggestedMinimum(pressureChart);
+    pressureSuggestedMinimum.innerText = pressureChartClass.getSuggestedMinimum(pressureChart);
+  }
+  document.getElementById('general_pressure_add_suggested_maximum_button').onclick = () => {
+    pressureChart = pressureChartClass.addToSuggestedMaximum(pressureChart);
+    pressureSuggestedMaximum.innerText = pressureChartClass.getSuggestedMaximum(pressureChart);
+  }
+  document.getElementById('general_pressure_subtract_suggested_maximum_button').onclick = () => {
+    pressureChart = pressureChartClass.subtractFromSuggestedMaximum(pressureChart);
+    pressureSuggestedMaximum.innerText = pressureChartClass.getSuggestedMaximum(pressureChart);
+  }
+
+  
+
+  // Pressure Chart end
   setInterval(() => {
     altitudeChart.update();
     temperatureChart.update();
     acelerationsChart.update();
     gyrosChart.update();
+    pressureChart.update();
   }, 200);
 })();
 
