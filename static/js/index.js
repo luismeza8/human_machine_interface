@@ -138,7 +138,6 @@
     pressureSuggestedMaximum.innerText = pressureChartClass.getSuggestedMaximum(pressureChart);
   }
 
-  
 
   // Pressure Chart end
   setInterval(() => {

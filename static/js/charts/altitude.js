@@ -2,12 +2,18 @@ class AltitudeChart {
   constructor(canvasName) {
     this.canvas = document.getElementById(canvasName);
   }
+  metersToKilometersConstructor() {
+    const divideToKilometers = num => num / 1000;
+    const newValues = altitudeValues.map(divideToKilometers);
+    console.log(newValues)
+    return newValues;
+  }
   chartConfig = {
     type: 'line',
     data: {
       labels: xAxisValues,
       datasets: [{
-        data: altitudeValues
+        data: this.metersToKilometersConstructor()
       }]
     },
     options: {
@@ -56,6 +62,13 @@ class AltitudeChart {
 
   subtractFromSuggestedMaximum(chart) {
     chart.config.options.scales.y.suggestedMax -= 50;
+    return chart;
+  }
+
+  metersToKilometers(chart) {
+    const divideToKilometers = num => num / 1000;
+    const newValues = altitudeValues.map(divideToKilometers);
+    chart.config.data.datasets[0].data = newValues
     return chart;
   }
 }

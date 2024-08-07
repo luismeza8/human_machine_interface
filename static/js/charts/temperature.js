@@ -58,4 +58,11 @@ class TemperatureChart {
     chart.config.options.scales.y.suggestedMax -= 50;
     return chart;
   }
+
+  celsiusToFahrenheit(chart) {
+    const convertToFahrenheit = celsius => (celsius * 1.8) + 32;
+    const newValues = temperatureValues.map(convertToFahrenheit)
+    chart.config.data.datasets[0].data = newValues
+    return chart
+  }
 }
