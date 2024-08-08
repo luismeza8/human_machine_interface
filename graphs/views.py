@@ -7,6 +7,10 @@ def index(request):
     return render(request, 'graphs/base.html')
 
 
+def tests(request):
+    return render(request, 'graphs/tests/view.html')
+
+
 def medition(request):
     if request.method == 'GET':
         medition = Medition()
