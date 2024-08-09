@@ -1,1 +1,7 @@
-yeap
+{% load static %}
+<link href="{% static 'src/output.css' %}" rel="stylesheet">
+
+<div class='flex'>
+  {% include "graphs/tests/chart.html" with place='one' unit='altitude' %}
+  {% include "graphs/tests/chart.html" with place='two' unit='temperature' %}
+</div>

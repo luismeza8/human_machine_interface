@@ -1,0 +1,70 @@
+{% load static %}
+<script type='text/javascript' src="{% static 'js/chart.umd.min.js' %}"></script>
+<link href="{% static 'src/output.css' %}" rel="stylesheet">
+
+<div class='flex flex-col w-1/2'>
+  <canvas id='chart_{{ place }}'></canvas>
+  <label for="units">Unidad:</label>
+  <select name="units" id="units_{{ place }}">
+    <option value="celsius">Celsius</option>
+    <option value="fahrenheit">Fahrenheit</option>
+  </select>
+</div>
+
+<script>
+(() => {
+  const ws = new WebSocket('ws://localhost:8000/ws/pocketqube/');
+  const chartCanvas = document.getElementById('chart_{{ place }}');
+  const unitsSelect = document.getElementById('units_{{ place }}');
+  const meditions = new Array(25);
+  const celsiusValues = new Array(25);
+  const fahrenheitValues = new Array(25);
+  const convertToFahrenheit = celsius => (celsius * 1.8) + 32;
+
+  const myChart = new Chart(chartCanvas,{
+    type: 'line',
+    data: {
+      labels: meditions,
+      datasets: [{
+        label: '# of Votes',
+        data: celsiusValues,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      animation: {
+        duration: 1
+      },
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
+
+  unitsSelect.addEventListener('change', function(e) {
+    if (unitsSelect.value == 'fahrenheit') {
+      myChart.config.data.datasets[0].data = fahrenheitValues;
+    } else {
+      myChart.config.data.datasets[0].data = celsiusValues;
+    }
+
+    myChart.update();
+  });
+  
+  ws.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+
+    meditions.shift();
+    meditions.push(data.medition);
+
+    celsiusValues.shift();
+    celsiusValues.push(data.temperature);
+    fahrenheitValues.shift();
+    fahrenheitValues.push(convertToFahrenheit(data.temperature));
+
+    myChart.update()
+  }
+})();
+</script>
