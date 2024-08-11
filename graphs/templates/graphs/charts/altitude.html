@@ -2,18 +2,137 @@
 <div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
   <h3 class='text-primary font-bold text-lg mb-1'>Altitud</h3>
   <canvas class='mb-4 p-2 bg-white rounded-xl' id="{{ place }}_altitude_canvas"></canvas>
-  <div class='flex w-full'>
+  <div class='flex justify-around w-full'>
     <div class='flex'>
       <p>Margen inferior:</p>
-      <button id='{{ place }}_altitude_add_suggested_minimum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='{{ place }}_altitude_suggested_minimum'></p>
       <button id='{{ place }}_altitude_subtract_suggested_minimum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <p id='{{ place }}_altitude_suggested_minimum'></p>
+      <button id='{{ place }}_altitude_add_suggested_minimum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
     </div>
     <div class='flex'>
       <p>Margen superior:</p>
-      <button id='{{ place }}_altitude_add_suggested_maximum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='{{ place }}_altitude_suggested_maximum'></p>
       <button id='{{ place }}_altitude_subtract_suggested_maximum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <p id='{{ place }}_altitude_suggested_maximum'></p>
+      <button id='{{ place }}_altitude_add_suggested_maximum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
     </div>
+    <label for="altitude_units">Unidad:</label>
+    <select class='px-2 bg-primary text-secondary rounded' name="altitude_units" id="{{ place }}_altitude_units">
+      <option value="meters">Meters</option>
+      <option value="kilometers">Kilometers</option>
+      <option value="miles">Miles</option>
+      <option value="feet">Feet</option>
+    </select>
   </div>
 </div>
+
+<script>
+(() => {
+  const ws = new WebSocket('ws://localhost:8000/ws/pocketqube/');
+  const chartCanvas = document.getElementById('{{ place }}_altitude_canvas');
+  const unitsSelect = document.getElementById('{{ place }}_altitude_units');
+  const suggestedMinimum = document.getElementById('{{ place }}_altitude_suggested_minimum');
+  const suggestedMaximum = document.getElementById('{{ place }}_altitude_suggested_maximum');
+  const meditions = new Array(25);
+  const metersValues = new Array(25);
+  const kilometersValues = new Array(25);
+  const milesValues = new Array(25);
+  const feetValues = new Array(25);
+  const convertToKilometers = meters => meters / 1000;
+  const convertToMiles = meters => meters / 1609;
+  const convertToFeet = meters => meters * 3.281;
+
+  const myChart = new Chart(chartCanvas, {
+    type: 'line',
+    data: {
+      labels: meditions,
+      datasets: [{
+        data: metersValues,
+        borderWidth: 4
+      }]
+    },
+    options: {
+      animation: {
+        duration: 1
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          suggestedMin: -100,
+          suggestedMax: 100
+        }
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    }
+  });
+
+  suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+  suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+  
+  document.getElementById('{{ place }}_altitude_subtract_suggested_minimum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMin -= 50;
+    suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_altitude_add_suggested_minimum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMin += 50;
+    suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_altitude_subtract_suggested_maximum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMax -= 50;
+    suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_altitude_add_suggested_maximum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMax += 50;
+    suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+    myChart.update();
+  }
+
+  unitsSelect.addEventListener('change', function(e) {
+    switch(unitsSelect.value) {
+      case 'kilometers':
+        myChart.config.data.datasets[0].data = kilometersValues;
+        console.log('km')
+        break;
+      case 'miles':
+        myChart.config.data.datasets[0].data = milesValues;
+        console.log('ml')
+        break;
+      case 'feet':
+        myChart.config.data.datasets[0].data = feetValues;
+        console.log('ft')
+        break;
+      default:
+        myChart.config.data.datasets[0].data = metersValues;
+        console.log('mt')
+    }
+    myChart.update();
+  });
+
+  ws.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+
+    meditions.shift();
+    meditions.push(data.medition);
+
+    metersValues.shift();
+    metersValues.push(data.altitude);
+    kilometersValues.shift();
+    kilometersValues.push(convertToKilometers(data.altitude));
+    milesValues.shift();
+    milesValues.push(convertToMiles(data.altitude));
+    feetValues.shift();
+    feetValues.push(convertToFeet(data.altitude));
+
+    myChart.update()
+  }
+})();
+</script>

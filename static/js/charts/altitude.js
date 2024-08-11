@@ -13,7 +13,7 @@ class AltitudeChart {
     data: {
       labels: xAxisValues,
       datasets: [{
-        data: this.metersToKilometersConstructor()
+        data: altitudeValues
       }]
     },
     options: {
