@@ -1,19 +1,117 @@
-{% load static %}
-<div class='flex flex-col items-center my-4 mr-4 ml-2 w-1/2'>
+<div class='flex flex-col items-center w-full'>
   <h3 class='text-primary font-bold text-lg mb-1'>Temperatura</h3>
   <canvas class='mb-4 p-2 bg-white rounded-xl' id="{{ place }}_temperature_canvas"></canvas>
-  <div class='flex w-full'>
+  <div class='flex justify-around w-full'>
     <div class='flex'>
       <p>Margen inferior:</p>
-      <button id='{{ place }}_temperature_add_suggested_minimum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='{{ place }}_temperature_suggested_minimum'></p>
       <button id='{{ place }}_temperature_subtract_suggested_minimum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <p id='{{ place }}_temperature_suggested_minimum'></p>
+      <button id='{{ place }}_temperature_add_suggested_minimum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
     </div>
     <div class='flex'>
       <p>Margen superior:</p>
-      <button id='{{ place }}_temperature_add_suggested_maximum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='{{ place }}_temperature_suggested_maximum'></p>
       <button id='{{ place }}_temperature_subtract_suggested_maximum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <p id='{{ place }}_temperature_suggested_maximum'></p>
+      <button id='{{ place }}_temperature_add_suggested_maximum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
     </div>
+    <label for="{{ place }}_temperature_units">Unidad:</label>
+    <select class='px-2 bg-primary text-secondary rounded' name="{{ place }}_temperature_units" id="{{ place }}_temperature_units">
+      <option value="celsius">Celsius</option>
+      <option value="fahrenheit">Fahrenheit</option>
+    </select>
   </div>
 </div>
+
+<script>
+(() => {
+  const ws = new WebSocket('ws://localhost:8000/ws/pocketqube/');
+  const chartCanvas = document.getElementById('{{ place }}_temperature_canvas');
+  const suggestedMinimum = document.getElementById('{{ place }}_temperature_suggested_minimum');
+  const suggestedMaximum = document.getElementById('{{ place }}_temperature_suggested_maximum');
+  const unitsSelect = document.getElementById('{{ place }}_temperature_units');
+  const meditions = new Array(25);
+  const celsiusValues = new Array(25);
+  const fahrenheitValues = new Array(25);
+  const convertToFahrenheit = celsius => (celsius * 1.8) + 32;
+
+  const myChart = new Chart(chartCanvas, {
+    type: 'line',
+    data: {
+      labels: meditions,
+      datasets: [{
+        data: celsiusValues,
+        borderWidth: 4,
+        borderColor: '#ff0000'
+      }]
+    },
+    options: {
+      animation: {
+        duration: 0
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          suggestedMin: 20,
+          suggestedMax: 40,
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    }
+  });
+
+  suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+  suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+  
+  document.getElementById('{{ place }}_temperature_subtract_suggested_minimum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMin -= 5;
+    suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_temperature_add_suggested_minimum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMin += 5;
+    suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_temperature_subtract_suggested_maximum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMax -= 5;
+    suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_temperature_add_suggested_maximum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMax += 5;
+    suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+    myChart.update();
+  }
+
+  unitsSelect.addEventListener('change', function(e) {
+    if (unitsSelect.value == 'fahrenheit') {
+      myChart.config.data.datasets[0].data = fahrenheitValues;
+    } else {
+      myChart.config.data.datasets[0].data = celsiusValues;
+    }
+
+    myChart.update();
+  });
+  
+  ws.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+
+    meditions.shift();
+    meditions.push(data.medition);
+
+    celsiusValues.shift();
+    celsiusValues.push(data.temperature);
+    fahrenheitValues.shift();
+    fahrenheitValues.push(convertToFahrenheit(data.temperature));
+
+    myChart.update()
+  }
+})();
+</script>

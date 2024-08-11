@@ -1,5 +1,4 @@
-{% load static %}
-<div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
+<div class='flex flex-col items-center w-full'>
   <h3 class='text-primary font-bold text-lg mb-1'>Altitud</h3>
   <canvas class='mb-4 p-2 bg-white rounded-xl' id="{{ place }}_altitude_canvas"></canvas>
   <div class='flex justify-around w-full'>
@@ -52,7 +51,7 @@
     },
     options: {
       animation: {
-        duration: 1
+        duration: 0
       },
       scales: {
         y: {
@@ -100,19 +99,15 @@
     switch(unitsSelect.value) {
       case 'kilometers':
         myChart.config.data.datasets[0].data = kilometersValues;
-        console.log('km')
         break;
       case 'miles':
         myChart.config.data.datasets[0].data = milesValues;
-        console.log('ml')
         break;
       case 'feet':
         myChart.config.data.datasets[0].data = feetValues;
-        console.log('ft')
         break;
       default:
         myChart.config.data.datasets[0].data = metersValues;
-        console.log('mt')
     }
     myChart.update();
   });
