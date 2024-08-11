@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PocketQube</title>
   <link href="{% static 'src/output.css' %}" rel="stylesheet">
-  <script type='text/javascript' src="{% static 'js/chart.umd.min.js' %}"></script>
+  <script type='text/javascript' src="{% static 'js/libraries/chart.umd.min.js' %}"></script>
   <script defer type='text/javascript' src='{% static "js/base.js" %}'></script>
 </head>
 
@@ -36,19 +36,19 @@
   <!-- Content start -->
   <main id='content' class='h-screen w-screen box-border overflow-y-auto'>
     <div id="general">
-      {% include "graphs/general.html" %}
+      {% include "graphs/views/general.html" %}
     </div>
 
     <div id='atmosfera' class='hidden'>
-      {% include "graphs/atmosfera.html" %}
+      {% include "graphs/views/atmosfera.html" %}
     </div>
 
     <div id='estructura' class='hidden'>
-      {% include "graphs/estructura.html" %}
+      {% include "graphs/views/estructura.html" %}
     </div>
 
     <div id="mensajeria" class='hidden'>
-      {% include "graphs/mensajeria.html" %}
+      {% include "graphs/views/mensajeria.html" %}
     </div>
   </main>
   <!-- Content end -->

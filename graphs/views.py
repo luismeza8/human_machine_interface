@@ -32,8 +32,3 @@ def medition(request):
 
     return HttpResponse('POST is not allow.')
 
-
-def meditions(request):
-    meditions = Medition.objects.all()
-    return render(request, 'graphs/meditions.html', {'meditions': meditions})
-
