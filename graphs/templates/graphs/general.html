@@ -45,18 +45,18 @@
   <!-- Charts container start -->
   <div class='bg-secondary w-full h-fit overflow-y-auto rounded-3xl'>
 
-    <div class='pt-2 w-full flex justify-evenly items-center'>
+    <div class='pt-2 mb-12 w-full flex'>
       <div class='w-1/2 pl-4 pr-2'>{% include "graphs/charts/altitude.html" with place="general" %}</div>
       <div class='w-1/2 pl-2 pr-4'>{% include "graphs/charts/temperature.html" with place="general" %}</div>
     </div>
 
-    <div class='flex justify-evenly'>
-      {% include "graphs/charts/acelerations.html" with place="general" %}
-      {% include "graphs/charts/gyros.html" with place="general" %}
+    <div class='mb-12 flex'>
+      <div class='w-1/2 pl-4 pr-2'>{% include "graphs/charts/acelerations.html" with place="general" %}</div>
+      <div class='w-1/2 pl-2 pr-4'>{% include "graphs/charts/gyros.html" with place="general" %}</div>
     </div>
 
-    <div class='flex justify-evenly'>
-      {% include "graphs/charts/pressure.html" with place="general" %}
+    <div class='p-4 flex w-full justify-center'>
+      <div class='w-[80%] pl-2 pr-4'>{% include "graphs/charts/pressure.html" with place="general" %}</div>
     </div>
 
   </div>

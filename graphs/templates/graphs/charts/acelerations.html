@@ -1,20 +1,139 @@
-{% load static %}
-<div class='flex flex-col items-center my-4 mr-2 ml-4 w-1/2'>
+<div class='flex flex-col items-center'>
   <h3 class='text-primary font-bold text-lg mb-1'>Aceleraciones</h3>
   <canvas class='mb-4 p-2 bg-white rounded-xl' id='{{ place }}_acelerations_canvas'></canvas>
-  <div class='flex w-full'>
+  <div class='flex justify-around w-full'>
     <div class='flex'>
       <p>Margen inferior:</p>
-      <button id='{{ place }}_acelerations_add_suggested_minimum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='{{ place }}_acelerations_suggested_minimum'></p>
       <button id='{{ place }}_acelerations_subtract_suggested_minimum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <p id='{{ place }}_acelerations_suggested_minimum'></p>
+      <button id='{{ place }}_acelerations_add_suggested_minimum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
     </div>
     <div class='flex'>
       <p>Margen superior:</p>
-      <button id='{{ place }}_acelerations_add_suggested_maximum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
-      <p id='{{ place }}_acelerations_suggested_maximum'></p>
       <button id='{{ place }}_acelerations_subtract_suggested_maximum_button' class='mx-2 px-3 text-white rounded-full bg-primary'>-</button>
+      <p id='{{ place }}_acelerations_suggested_maximum'></p>
+      <button id='{{ place }}_acelerations_add_suggested_maximum_button' class='mx-2 px-2 text-white rounded-full bg-primary'>+</button>
     </div>
+    <label for="acelerations_units">Unidad:</label>
+    <select class='px-2 bg-primary text-secondary rounded' name="acelerations_units" id="{{ place }}_acelerations_units">
+      <option value="g">g</option>
+      <option value="ms2">m/s^2</option>
+    </select>
   </div>
 </div>
 
+<script>
+(() => {
+  const ws = new WebSocket('ws://localhost:8000/ws/pocketqube/');
+  const chartCanvas = document.getElementById('{{ place }}_acelerations_canvas');
+  const unitsSelect = document.getElementById('{{ place }}_acelerations_units');
+  const suggestedMinimum = document.getElementById('{{ place }}_acelerations_suggested_minimum');
+  const suggestedMaximum = document.getElementById('{{ place }}_acelerations_suggested_maximum');
+  const meditions = new Array(25);
+
+  const ms2ValuesX = new Array(25);
+  const gValuesX = new Array(25);
+
+  const ms2ValuesY = new Array(25);
+  const gValuesY = new Array(25);
+
+  const ms2ValuesZ = new Array(25);
+  const gValuesZ = new Array(25);
+
+  const convertGToMs2 = g => g * 9.81;
+
+  const myChart = new Chart(chartCanvas, {
+    type: 'line',
+    data: {
+      labels: meditions,
+      datasets: [
+        {label: 'X', data: gValuesX, borderWidth: 4, borderColor: 'rgb(255, 255, 0)'},
+        {label: 'Y', data: gValuesY, borderWidth: 4, borderColor: 'rgb(0, 255, 255)'},
+        {label: 'Z', data: gValuesZ, borderWidth: 4, borderColor: 'rgb(0, 255, 0)'}
+      ]
+    },
+    options: {
+      animation: {
+        duration: 0
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          suggestedMin: -1,
+          suggestedMax: 1
+        }
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    }
+  });
+
+  suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+  suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+  
+  document.getElementById('{{ place }}_acelerations_subtract_suggested_minimum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMin -= 0.5;
+    suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_acelerations_add_suggested_minimum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMin += 0.5;
+    suggestedMinimum.innerText = myChart.config.options.scales.y.suggestedMin;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_acelerations_subtract_suggested_maximum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMax -= 0.5;
+    suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+    myChart.update();
+  }
+
+  document.getElementById('{{ place }}_acelerations_add_suggested_maximum_button').onclick = () => {
+    myChart.config.options.scales.y.suggestedMax += 0.5;
+    suggestedMaximum.innerText = myChart.config.options.scales.y.suggestedMax;
+    myChart.update();
+  }
+
+  unitsSelect.addEventListener('change', function(e) {
+    if (unitsSelect.value === 'ms2') {
+      myChart.config.data.datasets[0].data = ms2ValuesX;
+      myChart.config.data.datasets[1].data = ms2ValuesY;
+      myChart.config.data.datasets[2].data = ms2ValuesZ;
+    } else {
+      myChart.config.data.datasets[0].data = gValuesX;
+      myChart.config.data.datasets[1].data = gValuesY;
+      myChart.config.data.datasets[2].data = gValuesZ;
+
+    }
+    
+    myChart.update();
+  });
+
+  ws.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+
+    meditions.shift();
+    meditions.push(data.medition);
+
+    gValuesX.shift();
+    gValuesX.push(data.aceleration_x);
+    gValuesY.shift();
+    gValuesY.push(data.aceleration_y);
+    gValuesZ.shift();
+    gValuesZ.push(data.aceleration_z);
+
+    ms2ValuesX.shift();
+    ms2ValuesX.push(convertGToMs2(data.aceleration_x));
+    ms2ValuesY.shift();
+    ms2ValuesY.push(convertGToMs2(data.aceleration_y));
+    ms2ValuesZ.shift();
+    ms2ValuesZ.push(convertGToMs2(data.aceleration_z));
+
+    myChart.update()
+  }
+})();
+</script>
