@@ -1,7 +1,8 @@
-<div class='bg-white flex flex-col h-screen w-full px-8 py-4'>
+<div class='bg-white flex box-border h-screen w-full pl-2 py-2'>
   <!--<div class='mb-4 w-full h-[8%] text-primary text-4xl'>Misión Jeeka</div>-->
 
   <!-- Status container start -->
+  <!--
   <div class='flex mb-4 bg-secondary w-full h-[500px] rounded-3xl'>
 
     <div class='py-5 px-8 m-1 w-[20%]'>
@@ -40,10 +41,11 @@
       </div>
     </div>
   </div>
+  -->
   <!-- Status container end -->
 
   <!-- Charts container start -->
-  <div class='bg-secondary w-full h-fit overflow-y-auto rounded-3xl'>
+  <div class='bg-secondary w-full h-full overflow-y-scroll rounded-3xl'>
 
     <div class='pt-2 mb-12 w-full flex'>
       <div class='w-1/2 pl-4 pr-2'>{% include "graphs/charts/altitude.html" with place="general" %}</div>
@@ -60,5 +62,6 @@
     </div>
 
   </div>
+
   <!-- Charts container end -->
 </div>

@@ -14,19 +14,19 @@
 <body class='flex w-full h-screen'>
 
   <!-- Sidebar start -->
-  <aside class='p-4 flex flex-col items-center bg-primary w-[200px] h-screen'>
-    <div class='h-[120px] w-[120px] rounded-full bg-secondary'></div>
-    <div class='mt-16'>
-        <div id='generalBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+  <aside class='flex flex-col items-center bg-primary w-[5%] h-screen'>
+    <div class='h-[80px] w-[80px] rounded-full bg-secondary'></div>
+    <div class='mt-16 font-semibold'>
+        <div id='generalBtn' class='mb-12 text-center text-secondary text-xs cursor-pointer hover:underline'>
           General
         </div>
-        <div id='atmosferaBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+        <div id='atmosferaBtn' class='mb-12 text-center text-secondary text-xs cursor-pointer hover:underline'>
           Atmosfera
         </div>
-        <div id='estructuraBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+        <div id='estructuraBtn' class='mb-12 text-center text-secondary text-xs cursor-pointer hover:underline'>
           Estructura
         </div>
-        <div id='mensajeriaBtn' class='mb-12 text-secondary text-xl cursor-pointer hover:underline'>
+        <div id='mensajeriaBtn' class='mb-12 text-center text-secondary text-xs cursor-pointer hover:underline'>
           Mensajeria
         </div>
     </div>
@@ -34,7 +34,7 @@
   <!-- Sidebar end -->
 
   <!-- Content start -->
-  <main id='content' class='h-screen w-screen box-border overflow-y-auto'>
+  <main id='content' class='w-[75%] box-border'>
     <div id="general">
       {% include "graphs/views/general.html" %}
     </div>
@@ -53,6 +53,7 @@
   </main>
   <!-- Content end -->
 
+    <div class='p-2 w-[20%] box-border'>{% include "graphs/right_sidebar.html" %}</div>
 </body>
 </html>
 
